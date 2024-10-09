@@ -1,8 +1,7 @@
 "use server";
 import { MongoClient } from 'mongodb';
-
-const uri = process.env.NEXT_PUBLIC_MONGODB_URI; // MongoDB connection URI
-console.log(uri)
+const dotenv = require('dotenv');
+dotenv.config();
 
 export async function POST(req) {
   try {
@@ -11,7 +10,7 @@ export async function POST(req) {
     const { name, email, message } = body;
 
     // Connecting to MongoDB
-    const client = await MongoClient.connect(uri);
+    const client = await MongoClient.connect(process.env.NEXT_PUBLIC_MONGODB_URI);
     const db = client.db('my_portfolio'); // Replace with your actual database name
     const today = new Date().toISOString().slice(0, 10);
     const time = new Date().toLocaleTimeString();

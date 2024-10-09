@@ -1,7 +1,7 @@
 "use server";
 import { MongoClient } from 'mongodb';
-
-const uri = process.env.MONGODB_URI; // MongoDB connection URI
+const dotenv = require('dotenv');
+dotenv.config();
 
 export async function POST(req) {
   try {
@@ -9,9 +9,9 @@ export async function POST(req) {
     const body = await req.json();
 
     // Check if the name and password match
-    if (body.name === "ak47" && body.password === "ak@123") {
+    if (body.name === process.env.NEXT_PUBLIC_DB_USER && body.password === process.env.NEXT_PUBLIC_DB_PASSWORD) {
       // Connect to MongoDB
-      const client = await MongoClient.connect(uri);
+      const client = await MongoClient.connect(process.env.NEXT_PUBLIC_MONGODB_URI);
       const db = client.db('my_portfolio'); // Replace with your database name
 
       // Fetch all messages from the 'messages' collection

@@ -10,8 +10,8 @@ export default function Messages() {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const namex = prompt("Enter Username:", "ak47");
-      const password = prompt("Enter Password:", "ak@123");
+      const namex = prompt("Enter Username:");
+      const password = prompt("Enter Password:");
 
       if (!namex || !password) {
         setError('Username and password are required!');
