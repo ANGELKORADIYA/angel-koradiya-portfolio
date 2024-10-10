@@ -9,9 +9,9 @@ export async function POST(req) {
     const body = await req.json();
 
     // Check if the name and password match
-    if (body.name === process.env.NEXT_PUBLIC_DB_USER && body.password === process.env.NEXT_PUBLIC_DB_PASSWORD) {
+    if (body.name === process.env.DB_USER && body.password === process.env.DB_PASSWORD) {
       // Connect to MongoDB
-      const client = await MongoClient.connect(process.env.NEXT_PUBLIC_MONGODB_URI);
+      const client = await MongoClient.connect(process.env.DB_MONGODB_URI);
       const db = client.db('my_portfolio'); // Replace with your database name
 
       // Fetch all messages from the 'messages' collection
