@@ -15,10 +15,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8903937759165446" />
-        {/* Ensure metadata tags like this go inside <head> */}
-      </head>
-      <body className={inter.className}>
-        {/* Google AdSense Script */}
         <Script
           id="adsense-script"
           async
@@ -27,6 +23,13 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive" // Load after the page becomes interactive
           crossOrigin="anonymous"
         />
+        <Script
+          async
+          custom-element="amp-ad"
+          src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"
+        />
+      </head>
+      <body className={inter.className}>
         <Navbar />
         {children}
         <amp-ad
