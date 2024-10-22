@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Script from 'next/script';
+import Script from "next/script";
 
 import Navbar from "./navbar";
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +29,17 @@ export default function RootLayout({ children }) {
         />
         <Navbar />
         {children}
+        <amp-ad
+          width="100vw"
+          height="320"
+          type="adsense"
+          data-ad-client="ca-pub-8903937759165446"
+          data-ad-slot="8301257965"
+          data-auto-format="rspv"
+          data-full-width=""
+        >
+          <div overflow=""></div>
+        </amp-ad>
       </body>
     </html>
   );
