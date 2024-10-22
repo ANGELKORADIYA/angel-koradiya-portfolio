@@ -15,14 +15,18 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8903937759165446" />
+        {/* Ensure metadata tags like this go inside <head> */}
       </head>
-      <Script
-        async
-        src={"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8903937759165446"}
-        crossorigin="anonymous"
-        strategy={"lazyOnload"}
-      />
       <body className={inter.className}>
+        {/* Google AdSense Script */}
+        <Script
+          id="adsense-script"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          data-ad-client="ca-pub-8903937759165446"
+          strategy="afterInteractive" // Load after the page becomes interactive
+          crossOrigin="anonymous"
+        />
         <Navbar />
         {children}
       </body>
