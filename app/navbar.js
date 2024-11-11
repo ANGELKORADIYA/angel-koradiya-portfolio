@@ -13,9 +13,9 @@ export default function Navbar() {
   };
 
   return (
-    <div className="absolute top-0 left-0 right-0 z-50 min-w-screen flex justify-center items-center bg-white p-4 shadow-lg">
+    <div className="absolute top-0 left-0 right-0 z-50 min-w-screen flex justify-center bg-white dark:bg-gray-900 items-center p-4 shadow-lg">
       <div className="flex justify-between items-center w-full max-w-7xl">
-        <div className="text-3xl font-extrabold">
+        <div className="text-3xl font-extrabold text-white">
           Angel Koradiya
         </div>
         <nav className="hidden sm:flex space-x-6">

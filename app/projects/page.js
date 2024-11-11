@@ -1,7 +1,6 @@
 // pages/projects.js
 "use client";
 
-import GoogleAd from "../comp/googlead";
 
 const projects = [
   {
@@ -62,7 +61,6 @@ export default function Projects() {
                 </button>
                 }
               </div>
-              <GoogleAd />
             </div>
           ))}
         </div>

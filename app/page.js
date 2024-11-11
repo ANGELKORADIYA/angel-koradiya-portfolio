@@ -41,7 +41,7 @@ const connectWithMe = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex justify-center items-center pt-20 px-4">
+    <div className="min-h-screen flex justify-center items-center pt-20 px-4 m-5">
       <div className="bg-white shadow-lg rounded-lg max-w-3xl w-full p-8 sm:p-12">
         <h1 className="text-5xl font-extrabold text-center text-gray-900 mb-6">
           Welcome to My Portfolio
