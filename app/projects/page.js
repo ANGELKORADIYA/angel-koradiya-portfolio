@@ -7,7 +7,7 @@ const projects = [
     title: 'Wanderlogue',
     description: 'A travel log app that allows users to document their journeys with features like infinite scrolling and post uploads.',
     link: 'https://wanderlogues.vercel.app/', // Update with the actual link
-    link2: 'https://github.com/AngelKoradiya/newwanderlogue',
+    link2: 'https://github.com/ANGELKORADIYA/Wanderlogue',
   },
   {
     title: 'QuizMaster',
@@ -18,7 +18,14 @@ const projects = [
   {
     title: 'White Water - Stock Analysis and Prediction Model',
     description: 'A stock analysis and prediction model designed to provide insights and forecast stock trends based on historical data.',
-    link2: 'https://github.com/AngelKoradiya/white_water',
+    link: 'https://black-waters.vercel.app/',
+    link2: 'https://github.com/ANGELKORADIYA/white-water-analysis',
+  },
+  {
+    title: 'Polylex',
+    description: 'Dynamic Dictonary',
+    link: 'https://polylex.vercel.app/',
+    // link2: 'https://github.com/ANGELKORADIYA/Polylex',
   },
   {
     title: 'Public Library Management',
@@ -57,7 +64,7 @@ export default function Projects() {
                   className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition"
                   onClick={() => window.open(project.link, '_blank')}
                   >
-                  Open Project
+                  Go to Website
                 </button>
                 }
               </div>

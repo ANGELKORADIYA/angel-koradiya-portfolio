@@ -4,14 +4,14 @@ const dataStructuresAndAlgorithms = {
   title: "Competitive Programming",
   resources: [
     {
-      name: "Coding Ninja",
-      link: "https://www.naukri.com/code360/profile/angelkoradiya",
-      logo: "https://cdn-icons-png.flaticon.com/512/6058/6058350.png",
-    },
-    {
       name: "LeetCode",
       link: "https://leetcode.com/u/Angel_Koradiya/",
       logo: "https://cdn-icons-png.flaticon.com/512/3296/3296814.png",
+    },
+    {
+      name: "Coding Ninja",
+      link: "https://www.naukri.com/code360/profile/angelkoradiya",
+      logo: "https://cdn-icons-png.flaticon.com/512/6058/6058350.png",
     },
     {
       name: "HackerRank",
@@ -24,12 +24,12 @@ const dataStructuresAndAlgorithms = {
 const connectWithMe = [
   {
     name: "GitHub",
-    link: "https://github.com/angel-koradiya",
+    link: "https://github.com/angelkoradiya",
     logo: "https://cdn-icons-png.flaticon.com/512/25/25231.png",
   },
   {
     name: "LinkedIn",
-    link: "https://linkedin.com/in/angelkoradiya",
+    link: "https://linkedin.com/in/angel-koradiya",
     logo: "https://cdn-icons-png.flaticon.com/512/61/61109.png",
   },
   {

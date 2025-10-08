@@ -27,7 +27,7 @@ export const metadata = {
     images: [siteConfig.image],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: siteConfig.icon,
   },
   verification: {
     google: siteConfig.googleVerification,
