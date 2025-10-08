@@ -12,7 +12,7 @@ const projects = [
   {
     title: 'QuizMaster',
     description: 'An interactive quiz application for creating dynamic quizzes with real-time student result displays and analytics.',
-    link: 'https://quiz-3hxz.onrender.com/', // Update with the actual link
+    link: 'https://quiz-minimal.onrender.com/', // Update with the actual link
     link2: 'https://github.com/AngelKoradiya/Quiz',
   },
   {
