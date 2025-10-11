@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -15,9 +16,18 @@ export default function Navbar() {
   return (
     <div className="absolute top-0 left-0 right-0 z-50 min-w-screen flex justify-center bg-white dark:bg-gray-900 items-center p-4 shadow-lg">
       <div className="flex justify-between items-center w-full max-w-7xl">
-        <div className="text-3xl font-extrabold text-white">
-          Angel Koradiya
-        </div>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo.png"
+            alt="Angel Koradiya logo"
+            width={44}
+            height={44}
+            className="rounded-full object-cover"
+          />
+          <span className="text-2xl font-extrabold text-gray-900 dark:text-white hidden sm:inline">
+            Angel Koradiya
+          </span>
+        </Link>
         <nav className="hidden sm:flex space-x-6">
           {['Home', 'Projects', 'Learning', 'About', 'Contact'].map((tab) => (
             <Link

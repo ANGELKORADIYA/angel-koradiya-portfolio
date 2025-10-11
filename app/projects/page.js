@@ -16,10 +16,10 @@ const projects = [
     link2: 'https://github.com/AngelKoradiya/Quiz',
   },
   {
-    title: 'White Water - Stock Analysis and Prediction Model',
+    title: 'Black Water - Stock Analysis and Prediction Model',
     description: 'A stock analysis and prediction model designed to provide insights and forecast stock trends based on historical data.',
     link: 'https://black-waters.vercel.app/',
-    link2: 'https://github.com/ANGELKORADIYA/white-water-analysis',
+    link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
   },
   {
     title: 'Polylex',
