@@ -125,6 +125,58 @@ export default function Learning() {
         },
       ],
     },
+    ,
+  {
+    title: "Next.js",
+    resources: [
+      {
+        name: "Next.js Full Course by Traversy Media",
+        link: "https://youtu.be/Y6KDk5iyrYE",
+      },
+      {
+        name: "Next.js Crash Course by Codevolution",
+        link: "https://youtu.be/NbYgm0r7u6o",
+      },
+      {
+        name: "Next.js Official Documentation",
+        link: "https://nextjs.org/docs",
+      },
+    ],
+  },
+   {
+    title: "ML Basics (Scikit-learn)",
+    resources: [
+      {
+        name: "Scikit-learn Crash Course by freeCodeCamp",
+        link: "https://youtu.be/0Lt9w-BxKFQ",
+      },
+      {
+        name: "Introduction to Scikit-learn by Krish Naik",
+        link: "https://youtu.be/pqNCD_5r0IU",
+      },
+      {
+        name: "Official Scikit-learn Documentation",
+        link: "https://scikit-learn.org/stable/user_guide.html",
+      },
+    ],
+  },
+  {
+    title: "Generative AI",
+    resources: [
+      {
+        name: "Intro to Generative AI by Google Cloud",
+        link: "https://www.cloudskillsboost.google/course_templates/536",
+      },
+      {
+        name: "Google Generative AI Leader Certification Course",
+        link: "https://youtu.be/30diF8dKpAY?si=Jv6yk0PAORCMgO9u",
+      },
+      {
+        name: "Hugging Face - Introduction to Transformers",
+        link: "https://huggingface.co/transformers/",
+      },
+    ],
+  },
   ];
 
   return (

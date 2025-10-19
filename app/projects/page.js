@@ -22,6 +22,17 @@ const projects = [
     link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
   },
   {
+    title: 'ForgeOAgent',
+    description: 'Prompt Processor is a tool that helps you creating agents and use them and also main mode for real world tasks.',
+    link: 'https://forgeoagent.vercel.app/',
+    link2: 'https://github.com/ANGELKORADIYA/ForgeOAgent',
+  },
+   {
+    title: 'Regex Studio',
+    description: 'Regex Studio for testing and generating regular expressions examples.',
+    link: 'https://regex-studio.vercel.app/',
+  },
+  {
     title: 'Polylex',
     description: 'Dynamic Dictonary',
     link: 'https://polylex.vercel.app/',

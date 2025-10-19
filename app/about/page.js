@@ -33,11 +33,14 @@ export default function About() {
         <div className="mb-10">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Skills</h2>
           <ul className="grid grid-cols-2 gap-4 text-gray-700">
-            <li className="flex items-center"><span className="font-semibold">MERN Stack</span></li>
-            <li className="flex items-center"><span className="font-semibold">Java</span></li>
             <li className="flex items-center"><span className="font-semibold">C / C++</span></li>
             <li className="flex items-center"><span className="font-semibold">Python</span></li>
-            <li className="flex items-center"><span className="font-semibold">Next.js (Learning)</span></li>
+            <li className="flex items-center"><span className="font-semibold">MERN Stack</span></li>
+            <li className="flex items-center"><span className="font-semibold">Next.js</span></li>
+            <li className="flex items-center"><span className="font-semibold">Java</span></li>
+            <li className="flex items-center"><span className="font-semibold">Generative AI</span></li>
+            <li className="flex items-center"><span className="font-semibold">Machine Learning Basics</span></li>
+            <li className="flex items-center"><span className="font-semibold">Deep Learning (Learning)</span></li>
           </ul>
         </div>
 
