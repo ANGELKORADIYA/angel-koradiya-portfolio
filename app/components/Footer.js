@@ -87,7 +87,7 @@ export default function Footer() {
     <footer className="bg-gray-100 py-12">
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold text-gray-800">Let's Connect! 📧</h3>
+          <h3 className="text-2xl font-bold text-gray-800">Let&apos;s Connect! 📧</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <div className="text-red-500">{error}</div>}
             {success && <div className="text-green-500">{success}</div>}

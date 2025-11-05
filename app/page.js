@@ -118,19 +118,19 @@ export default function Home() {
             </div>
             <ul className="space-y-3 text-gray-700">
               <li>
-                <strong>2019</strong> – 10th Grade: 89% |
+                <strong>2019</strong> - 10th Grade: 89% |
                 {showDetails && <span> Maths, Science: 98 marks |</span>} Aditya
                 School, Manavadar
               </li>
               <li>
-                <strong>2020-2021</strong> – 11th/12th Grade: 89% |
+                <strong>2020-2021</strong> - 11th/12th Grade: 89% |
                 {showDetails && (
                   <span> GUJCET: 80 marks | JEE: 93 Percentile |</span>
                 )}{" "}
                 Dream International School, Dhoraji
               </li>
               <li>
-                <strong>2021-2025</strong> – B.Tech in Computer Engineering |
+                <strong>2021-2025</strong> - B.Tech in Computer Engineering |
                 {showDetails && (
                   <span>
                     {" "}
@@ -140,7 +140,7 @@ export default function Home() {
                 Vishwakarma Government Engineering College, Ahmedabad
               </li>
               <li>
-                <strong>2025-Present</strong> – Software Engineer |
+                <strong>2025-Present</strong> - Software Engineer |
                 {showDetails && <span> Full-time Position |</span>} Silvertouch
                 Technology
               </li>
