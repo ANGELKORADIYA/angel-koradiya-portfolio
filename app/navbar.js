@@ -1,17 +1,27 @@
 "use client";
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [activeTab, setActiveTab] = useState(pathname==='/'?'Home':pathname.substring(1).charAt(0).toUpperCase()+pathname.slice(2));
+  const [activeTab, setActiveTab] = useState(
+    pathname === "/"
+      ? "Home"
+      : pathname.substring(1).charAt(0).toUpperCase() + pathname.slice(2)
+  );
+  const [resumeLink, setResumeLink] = useState(
+    "https://drive.google.com/file/d/1SjiYlVIaREhCBMUSFq8GwAq5Prh6k43R/view?usp=sharing"
+  );
 
+  useEffect(() => {
+    fetch(resumeLink, { method: "HEAD", mode: "no-cors" }).catch(() => {
+      setResumeLink("/Angel%20Koradiya%20Resume.pdf");
+    });
+  }, []);
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
+  const handleTabChange = (tab) => setActiveTab(tab);
 
   return (
     <div className="absolute top-0 left-0 right-0 z-50 min-w-screen flex justify-center bg-white dark:bg-gray-900 items-center p-4 shadow-lg">
@@ -28,21 +38,46 @@ export default function Navbar() {
             Angel Koradiya
           </span>
         </Link>
-        <nav className="hidden sm:flex space-x-6">
-          {['Home', 'Projects', 'Learning', 'About', 'Contact'].map((tab) => (
+
+        <nav className="hidden sm:flex space-x-6 items-center">
+          {["Home", "Projects", "Learning"].map((tab) => (
             <Link
               key={tab}
-              href={tab === 'Home' ? '/' : `/${tab.toLowerCase()}`}
+              href={tab === "Home" ? "/" : `/${tab.toLowerCase()}`}
               className={`px-4 py-2 rounded-lg text-base font-medium transition ${
                 activeTab === tab
-                  ? 'bg-sky-100 text-sky-600 dark:bg-sky-700 dark:text-sky-50'
-                  : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200'
+                  ? "bg-sky-100 text-sky-600 dark:bg-sky-700 dark:text-sky-50"
+                  : "text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => handleTabChange(tab)}
             >
               {tab}
             </Link>
           ))}
+
+          <a
+            href={resumeLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Angel Koradiya resume in a new tab"
+            className="px-4 py-2 rounded-lg text-base font-medium text-white hover:bg-sky-700 transition flex items-center gap-1"
+          >
+            Resume
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"
+              />
+            </svg>
+          </a>
         </nav>
       </div>
     </div>

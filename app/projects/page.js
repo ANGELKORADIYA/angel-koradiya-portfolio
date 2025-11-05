@@ -52,34 +52,57 @@ const projects = [
 
 export default function Projects() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 p-6 flex flex-col items-center">
-      <div className="max-w-6xl w-full p-8">
+    <div className="min-h-screen bg-gradient-to-b bg-gray-100 pt-20 p-6 flex flex-col items-center">
+      <div className="max-w-6xl w-full p-6">
         <h1 className="text-5xl font-extrabold text-center text-gray-900 mb-6">My Projects</h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-8"> 
+        <p className="text-center text-gray-600 max-w-2xl mx-auto">Selected projects with links to live demos and code. Hover a card to reveal more detail and actions.</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8"> 
           {projects.map((project, index) => (
-            <div key={index} className="bg-white max-w-xs h-64 p-4 rounded-lg shadow-lg transition transform hover:scale-105 flex flex-col">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h2>
-              <p className="text-gray-700 flex-grow mb-4">{project.description}</p>
-              <div className="flex mt-auto justify-around">
-                {
-                  project.link2 &&<button
-                  className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition"
-                  onClick={() => window.open(project.link2, '_blank')}
-                  >
-                  Code
-                </button>
-                }
-                {
-                  project.link &&<button
-                  className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition"
-                  onClick={() => window.open(project.link, '_blank')}
-                  >
-                  Go to Website
-                </button>
-                }
+            <article key={index} className="group relative bg-white rounded-2xl shadow-md hover:shadow-xl transform transition duration-300 hover:scale-[1.03] overflow-hidden">
+
+              <div className="relative p-5 flex flex-col h-64">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-lg flex items-center justify-center text-white font-bold text-lg" style={{background: `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`}}>
+                    {project.title ? project.title.charAt(0) : "P"}
+                  </div>
+                  <h2 className="text-lg font-semibold text-gray-800">{project.title}</h2>
+                </div>
+
+                <p className="text-gray-600 mt-3 overflow-hidden" style={{maxHeight: '4.5rem', transition: 'max-height 300ms'}}>
+                  {project.description}
+                </p>
+
+                <div className="mt-4 flex items-center gap-3 justify-center opacity-100 transition-opacity duration-300 w-max mx-auto flex-nowrap">
+                  {project.link2 && (
+                    <a href={project.link2} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-md text-sm hover:bg-indigo-700 transition whitespace-nowrap">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m6 4h-3m4 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Code
+                    </a>
+                  )}
+
+                  {project.link && (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-800 px-3 py-2 rounded-md text-sm hover:shadow-sm hover:bg-gray-50 hover:scale-105 transform transition focus:outline-none focus:ring-2 focus:ring-indigo-200 whitespace-nowrap">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656 0 4 4 0 010-5.656l1.414-1.414" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 0 4 4 0 010 5.656l-1.414 1.414" />
+                      </svg>
+                      Live
+                    </a>
+                  )}
+
+                </div>
+
+                <div className="absolute right-4 top-4 opacity-30 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c1.657 0 3-1.343 3-3S13.657 2 12 2 9 3.343 9 5s1.343 3 3 3zM21 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2" />
+                  </svg>
+                </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import Image from "next/image";
 
 const dataStructuresAndAlgorithms = {
   title: "Competitive Programming",
@@ -40,44 +42,131 @@ const connectWithMe = [
 ];
 
 export default function Home() {
+  const [showDetails, setShowDetails] = useState(false);
+
+  const toggleDetails = () => {
+    setShowDetails((prev) => !prev);
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-center pt-20 px-4 m-5">
-      <div className="bg-white shadow-lg rounded-lg max-w-3xl w-full p-8 sm:p-12">
+    <div className="min-h-screen pt-20 px-4 pb-7 bg-gray-100 mt-5">
+      <div className="bg-white shadow-lg rounded-lg max-w-3xl w-full p-8 sm:p-12 mx-auto">
         <h1 className="text-5xl font-extrabold text-center text-gray-900 mb-6">
           Welcome to My Portfolio
         </h1>
-        <p className="text-lg text-gray-700 text-center mb-10">
-          Hi! I am Angel Koradiya, a passionate engineering student exploring
-          the world of technology and software development.
-        </p>
 
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Connect with Me</h2>
-        <ul className="flex justify-center space-x-8 mb-10">
-          {connectWithMe.map((platform, index) => (
-            <li key={index} className="flex items-center">
-              <a
-                href={platform.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center group"
-              >
-                <img
-                  src={platform.logo}
-                  alt={`${platform.name} logo`}
-                  className="w-8 h-8 mr-3 transition-transform transform group-hover:scale-110"
-                />
-                <span className="text-gray-900 font-semibold transition-colors group-hover:text-blue-500">
-                  {platform.name}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="text-lg text-gray-700 mb-10 space-y-6">
+          <p className="leading-relaxed text-center">
+            Hello! I am{" "}
+            <span className="font-semibold text-sky-600">Angel Koradiya</span>,
+            a Computer Engineering graduate from{" "}
+            <span className="font-semibold">
+              Vishwakarma Government Engineering College
+            </span>
+            , Gujarat. Currently working at{" "}
+            <span className="font-semibold">Silvertouch Technology</span>.
+            Passionate about learning, coding, and growing with new challenges.
+          </p>
+
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Skills</h2>
+            <ul className="grid grid-cols-2 gap-4 text-gray-700">
+              <li className="flex items-center">
+                <span className="font-semibold">C / C++</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Python</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">MERN Stack</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Next.js</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Java</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Generative AI</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Machine Learning Basics</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Deep Learning (Learning)</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-3xl font-bold text-gray-800 text-center">
+                Academics
+              </h2>
+              <div className="flex justify-center items-center">
+                <button
+                  onClick={toggleDetails}
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                >
+                  {showDetails ? (
+                    <span>&#128065; Hide Details</span>
+                  ) : (
+                    <span>&#128064; Show Details</span>
+                  )}
+                </button>
+              </div>
+            </div>
+            <ul className="space-y-3 text-gray-700">
+              <li>
+                <strong>2019</strong> – 10th Grade: 89% |
+                {showDetails && <span> Maths, Science: 98 marks |</span>} Aditya
+                School, Manavadar
+              </li>
+              <li>
+                <strong>2020-2021</strong> – 11th/12th Grade: 89% |
+                {showDetails && (
+                  <span> GUJCET: 80 marks | JEE: 93 Percentile |</span>
+                )}{" "}
+                Dream International School, Dhoraji
+              </li>
+              <li>
+                <strong>2021-2025</strong> – B.Tech in Computer Engineering |
+                {showDetails && (
+                  <span>
+                    {" "}
+                    CPI: 8 | GATE Qualified (First Attempt) | Graduated |
+                  </span>
+                )}{" "}
+                Vishwakarma Government Engineering College, Ahmedabad
+              </li>
+              <li>
+                <strong>2025-Present</strong> – Software Engineer |
+                {showDetails && <span> Full-time Position |</span>} Silvertouch
+                Technology
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Hobbies</h2>
+            <ul className="grid grid-cols-3 gap-4 text-gray-700">
+              <li className="flex items-center">
+                <span className="font-semibold">Gaming</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Traveling</span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-semibold">Coding</span>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <h2 className="text-3xl font-bold text-gray-800 mb-6">
           {dataStructuresAndAlgorithms.title}
         </h2>
-        <ul className="flex justify-center space-x-8 mb-10">
+        <ul className="flex justify-center space-x-8">
           {dataStructuresAndAlgorithms.resources.map((resource, index) => (
             <li key={index} className="flex items-center">
               <a
@@ -86,10 +175,12 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="flex items-center group"
               >
-                <img
+                <Image
                   src={resource.logo}
                   alt={`${resource.name} logo`}
-                  className="w-8 h-8 mr-3 transition-transform transform group-hover:scale-110"
+                  width={32}
+                  height={32}
+                  className="mr-3 transition-transform transform group-hover:scale-110"
                 />
                 <span className="text-gray-900 font-semibold transition-colors group-hover:text-blue-500">
                   {resource.name}
@@ -98,19 +189,6 @@ export default function Home() {
             </li>
           ))}
         </ul>
-
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Get in Touch</h2>
-        <p className="text-lg text-gray-700 text-center">
-          Interested in collaborating or learning more about my work? Feel free
-          to reach out via{" "}
-          <a
-            href="mailto:koradiyaangel11@gmail.com"
-            className="text-blue-600 hover:underline"
-          >
-            email
-          </a>
-          .
-        </p>
       </div>
     </div>
   );
