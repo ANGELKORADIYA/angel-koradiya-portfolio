@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Footer() {
   const [formData, setFormData] = useState({
@@ -8,8 +10,6 @@ export default function Footer() {
     email: '',
     message: '',
   });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   const socialLinks = [
@@ -47,18 +47,17 @@ export default function Footer() {
     const { name, email, message } = formData;
 
     if (!name || !email || !message) {
-      setError('All fields are required.');
-      setSuccess('');
+      toast.error('All fields are required.', {
+      });
       return;
     }
 
     if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setError('Please enter a valid email.');
-      setSuccess('');
+      toast.error('Please enter a valid email.', {
+      });
       return;
     }
 
-    setError('');
     setLoading(true);
 
     try {
@@ -69,15 +68,15 @@ export default function Footer() {
       });
 
       if (response.ok) {
-        setSuccess('Message sent successfully!');
-        setError('');
+        toast.success('Message sent successfully!', {
+        });
         setFormData({ name: '', email: '', message: '' });
       } else {
         throw new Error('Something went wrong. Please try again.');
       }
     } catch (error) {
-      setError('Failed to send the message. Please check your connection.');
-      setSuccess('');
+      toast.error('Failed to send the message.', {
+      });
     } finally {
       setLoading(false);
     }
@@ -88,10 +87,19 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <h3 className="text-2xl font-bold text-gray-800">Let&apos;s Connect! 📧</h3>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && <div className="text-red-500">{error}</div>}
-            {success && <div className="text-green-500">{success}</div>}
-            
             <div>
               <input
                 type="text"
