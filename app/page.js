@@ -141,7 +141,7 @@ export default function Home() {
               </li>
               <li>
                 <strong>2025-Present</strong> - Software Engineer |
-                {showDetails && <span> Full-time Position |</span>} Silvertouch
+                {showDetails && <span> 6 months internship + Full-time Position |</span>} Silvertouch
                 Technology
               </li>
             </ul>
@@ -161,6 +161,27 @@ export default function Home() {
               </li>
             </ul>
           </div>
+        </div>
+
+
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Achievements</h2>
+          <ul className="space-y-3 text-gray-700">
+            {showDetails && <li className="flex items-center">
+              <span className="font-semibold">GATE 2025 Qualified (First Attempt)</span>
+            </li>}
+            <li className="flex items-center">
+              <span className="font-semibold">Completed Striver&apos;s SDE Sheet - </span>
+              <a 
+                href="https://takeuforward.org/profile/angelkoradiya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 ml-1"
+              >
+                View Profile
+              </a>
+            </li>
+          </ul>
         </div>
 
         <h2 className="text-3xl font-bold text-gray-800 mb-6">
