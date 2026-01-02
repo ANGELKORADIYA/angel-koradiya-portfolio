@@ -6,7 +6,7 @@ const projects = [
   {
     title: 'QuizMaster',
     description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.',
-    link: 'https://quiz-minimal.onrender.com/',
+    link: 'https://quiz-minimal.vercel.app/',
     link2: 'https://github.com/AngelKoradiya/Quiz',
   },
   {
