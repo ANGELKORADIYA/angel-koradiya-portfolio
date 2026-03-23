@@ -4,17 +4,11 @@
 
 const projects = [
   {
-    title: 'QuizMaster',
-    description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.',
-    link: 'https://quiz-minimal.vercel.app/',
-    link2: 'https://github.com/AngelKoradiya/Quiz',
+    title: 'Wanderlogue',
+    description: 'A full-stack travel logging application built with the MERN stack. Features include infinite scrolling, post uploads, and a seamless user experience  for documenting and sharing travel adventures.',
+    link: 'https://wanderlogues.vercel.app/',
+    link2: 'https://github.com/ANGELKORADIYA/Wanderlogue',
   },
-  {
-    title: '1930 Helpline Improvement',
-    description: 'A machine learning project aimed at enhancing the 1930 helpline services for finding fake complaints. Built using scikit-learn to analyze and optimize police court complaint processing.',
-    link2: 'https://github.com/Kathan0920/RJPOLICE_HACK_1202_CyberCrew_9',
-  },
-  
   {
     title: 'Black Water - Stock Analysis and Prediction Model',
     description: 'Inspired by the 1930 helpline project, I developed an automated stock analysis and prediction model. Uses historical data to provide insights and forecast market trends, helping to automate investment decisions.',
@@ -22,10 +16,10 @@ const projects = [
     link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
   },
   {
-    title: 'Wanderlogue',
-    description: 'A full-stack travel logging application built with the MERN stack. Features include infinite scrolling, post uploads, and a seamless user experience  for documenting and sharing travel adventures.',
-    link: 'https://wanderlogues.vercel.app/',
-    link2: 'https://github.com/ANGELKORADIYA/Wanderlogue',
+    title: 'QuizMaster',
+    description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.',
+    link: 'https://quiz-minimal.vercel.app/',
+    link2: 'https://github.com/AngelKoradiya/Quiz',
   },
   {
     title: 'ForgeOAgent',
@@ -34,15 +28,26 @@ const projects = [
     link2: 'https://github.com/ANGELKORADIYA/ForgeOAgent',
   },
   {
-    title: 'Regex Studio',
-    description: 'An interactive tool for testing and generating regular expressions with real-time examples and pattern matching. Currently under development with enhanced linguistic features planned.',
-    link: 'https://regex-studio.vercel.app/',
+    title: 'Zen Light - AI-Powered Extension',
+    description: 'ZenLight is a browser extension that brings AI to your fingertips — select any text on any webpage to instantly get explanations, translations, and visual context without leaving the page. Highlight a question and ZenLight automatically finds and marks the answer on the page. Plus, a distraction-free Spotlight Mode and YouTube productivity tools help you stay focused and in the zone.',
+    link: 'https://addons.mozilla.org/en-US/firefox/addon/zenlight-office-tools/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search',
+    link2: 'https://github.com/ANGELKORADIYA/ZenLight',   
   },
   {
     title: 'Polylex',
     description: 'A dynamic database application with advanced search capabilities and real-time definitions. Currently under development with enhanced linguistic features planned.',
     link: 'https://polylex.vercel.app/',
     // link2: 'https://github.com/ANGELKORADIYA/Polylex',
+  },
+  {
+    title: 'Regex Studio',
+    description: 'An interactive tool for testing and generating regular expressions with real-time examples and pattern matching. Currently under development with enhanced linguistic features planned.',
+    link: 'https://regex-studio.vercel.app/',
+  },
+  {
+    title: '1930 Helpline Improvement',
+    description: 'A machine learning project aimed at enhancing the 1930 helpline services for finding fake complaints. Built using scikit-learn to analyze and optimize police court complaint processing.',
+    link2: 'https://github.com/Kathan0920/RJPOLICE_HACK_1202_CyberCrew_9',
   },
   {
     title: 'Public Library Management',
