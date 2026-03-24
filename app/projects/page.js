@@ -8,30 +8,35 @@ const projects = [
     description: 'A full-stack travel logging application built with the MERN stack. Features include infinite scrolling, post uploads, and a seamless user experience  for documenting and sharing travel adventures.',
     link: 'https://wanderlogues.vercel.app/',
     link2: 'https://github.com/ANGELKORADIYA/Wanderlogue',
+    logo: 'https://wanderlogues.vercel.app/assets/favicon-CIIPRWpr.ico',
   },
   {
     title: 'Black Water - Stock Analysis and Prediction Model',
     description: 'Inspired by the 1930 helpline project, I developed an automated stock analysis and prediction model. Uses historical data to provide insights and forecast market trends, helping to automate investment decisions.',
     link: 'https://black-waters.vercel.app/',
     link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
+    logo: 'https://black-waters.vercel.app/assets/logo-Cc8KG4OS.png',
   },
   {
     title: 'QuizMaster',
     description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.',
     link: 'https://quiz-minimal.vercel.app/',
     link2: 'https://github.com/AngelKoradiya/Quiz',
+    logo: 'https://quiz-minimal.vercel.app/favicon.ico',
   },
   {
     title: 'ForgeOAgent',
     description: 'An advanced generative AI platform for creating and managing intelligent agents. Includes a sophisticated prompt processor that enables agents to handle real-world tasks. It\'s like having AI on your computer, basically executing Python code autonomously.',
     link: 'https://forgeoagent.vercel.app/',
     link2: 'https://github.com/ANGELKORADIYA/ForgeOAgent',
+    logo: '/forgeoagent_logo.png',
   },
   {
     title: 'Zen Light - AI-Powered Extension',
     description: 'ZenLight is a browser extension that brings AI to your fingertips — select any text on any webpage to instantly get explanations, translations, and visual context without leaving the page. Highlight a question and ZenLight automatically finds and marks the answer on the page. Plus, a distraction-free Spotlight Mode and YouTube productivity tools help you stay focused and in the zone.',
     link: 'https://addons.mozilla.org/en-US/firefox/addon/zenlight-office-tools/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search',
-    link2: 'https://github.com/ANGELKORADIYA/ZenLight',   
+    link2: 'https://github.com/ANGELKORADIYA/ZenLight',  
+    logo: '/zenlight_logo.png', 
   },
   {
     title: 'Code Every Where',
@@ -54,16 +59,24 @@ const projects = [
     description: 'A comprehensive management system for public libraries that streamlines book lending and user registrations. Dropped idea after hackathon.',
     link2: 'https://github.com/ANGELKORADIYA/public-library',
   },
-   {
+  {
+    title: 'Astroid Game',
+    description: 'A browser-based Asteroids-inspired arcade shooter built with JavaScript and HTML5 Only. Features ship physics, power-ups, UFO enemies, combo scoring, procedural music, and particle effects — all running in the browser with no dependencies.',
+    link: 'https://angelkoradiya.github.io/astroid-game/',
+    link2: 'https://github.com/ANGELKORADIYA/astroid-game',
+  },
+  {
     title: 'Polylex',
     description: 'A dynamic database application with advanced search capabilities and real-time definitions. Currently under development with enhanced linguistic features planned.',
     link: 'https://polylex.vercel.app/',
     // link2: 'https://github.com/ANGELKORADIYA/Polylex',
+    logo: 'https://polylex.vercel.app/favicon.ico',
   },
   {
     title: 'Regex Studio',
     description: 'An interactive tool for testing and generating regular expressions with real-time examples and pattern matching. Currently under development with enhanced linguistic features planned.',
     link: 'https://regex-studio.vercel.app/',
+    logo: 'https://regex-studio.vercel.app/favicon.ico',
   },
 ];
 
@@ -82,8 +95,21 @@ export default function Projects() {
               <div className="relative p-6 flex flex-col flex-grow">
                 {/* Header with icon and title */}
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg" style={{background: `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`}}>
-                    {project.title ? project.title.charAt(0) : "P"}
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg overflow-hidden bg-white" style={{background: project.logo ? 'white' : `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`}}>
+                    {project.logo ? (
+                      <img 
+                        src={project.logo} 
+                        alt={`${project.title} logo`} 
+                        className="w-full h-full object-contain p-1"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.style.background = `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`;
+                          e.target.parentElement.innerText = project.title ? project.title.charAt(0) : "-";
+                        }}
+                      />
+                    ) : (
+                      project.title ? project.title.charAt(0) : "-"
+                    )}
                   </div>
                   <h2 className="text-xl font-bold text-gray-900 leading-tight flex-1">{project.title}</h2>
                 </div>
