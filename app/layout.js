@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./navbar";
 import Footer from "./components/Footer";
 import { siteConfig } from "../lib/siteConfig";
+import { ThemeProvider } from "./components/ThemeProvider";
+import CustomCursor from "./components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -58,27 +60,52 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+                  if (!theme && supportDarkMode) theme = 'dark';
+                  if (!theme) theme = 'dark'; // Hard default to dark
+                  
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} bg-white dark:bg-gray-900 transition-colors duration-300`}>
+        <ThemeProvider>
+          <CustomCursor />
+          <Navbar />
 
-        {/* Google Analytics */}
-        {siteConfig.gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="gtag-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);} 
-                gtag('js', new Date());
-                gtag('config', '${siteConfig.gaId}');`}
-            </Script>
-          </>
-        )}
+          {/* Google Analytics */}
+          {siteConfig.gaId && (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`}
+                strategy="afterInteractive"
+              />
+              <Script id="gtag-init" strategy="afterInteractive">
+                {`window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);} 
+                  gtag('js', new Date());
+                  gtag('config', '${siteConfig.gaId}');`}
+              </Script>
+            </>
+          )}
 
-        <main>{children}</main>
-        <Footer />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
 
         {/* Enhanced Structured Data (JSON-LD) */}
         <script

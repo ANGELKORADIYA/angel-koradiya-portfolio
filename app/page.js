@@ -49,167 +49,127 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pt-20 px-4 pb-7 bg-gray-100 mt-5">
-      <div className="bg-white shadow-lg rounded-lg max-w-3xl w-full p-8 sm:p-12 mx-auto">
-        <h1 className="text-5xl font-extrabold text-center text-gray-900 mb-6">
-          Welcome to My Portfolio
-        </h1>
+    <div className="min-h-screen pt-32 pb-12 bg-gray-50 dark:bg-gray-950 transition-colors duration-300 overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
+        <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-sky-200 dark:bg-sky-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob pointer-events-none"></div>
+        <div className="absolute top-[20%] right-[10%] w-72 h-72 bg-purple-200 dark:bg-purple-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000 pointer-events-none"></div>
+        <div className="absolute bottom-[20%] left-[15%] w-80 h-80 bg-pink-200 dark:bg-pink-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000 pointer-events-none"></div>
+      </div>
 
-        <div className="text-lg text-gray-700 mb-10 space-y-6">
-          <p className="leading-relaxed text-center">
-            Hello! I am{" "}
-            <span className="font-semibold text-sky-600">Angel Koradiya</span>,
-            a Computer Engineering graduate from{" "}
-            <span className="font-semibold">
-              Vishwakarma Government Engineering College
-            </span>
-            , Gujarat. Currently working at{" "}
-            <span className="font-semibold">Silvertouch Technology</span>.
-            Passionate about learning, coding, and growing with new challenges.
-          </p>
-
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Skills</h2>
-            <ul className="grid grid-cols-2 gap-4 text-gray-700">
-              <li className="flex items-center">
-                <span className="font-semibold">C / C++</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Python</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">MERN Stack</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Next.js</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Java</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Generative AI</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Machine Learning Basics</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Deep Learning (Learning)</span>
-              </li>
-            </ul>
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Hero Section */}
+        <section className="text-center mb-20 animate-fade-in-down">
+          <div className="relative inline-block mb-6">
+            <div className="absolute inset-0 bg-gradient-to-tr from-sky-400 to-indigo-600 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+            <h1 className="relative text-6xl md:text-7xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
+              Hello, I&apos;m <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400">Angel Koradiya</span>
+            </h1>
           </div>
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Computer Engineering graduate & Software Engineer at <span className="font-semibold text-sky-600 dark:text-sky-400">Silvertouch Technology</span>. 
+            Crafting elegant solutions with code.
+          </p>
+          <div className="mt-10 flex justify-center gap-4">
+            <a href="#skills" className="px-8 py-3 bg-gray-900 dark:bg-white dark:text-gray-900 text-white rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all hover:shadow-xl hover:-translate-y-1">View My Skills</a>
+            <a href="/projects" className="px-8 py-3 bg-white dark:bg-gray-800 dark:text-white dark:border-gray-700 border border-gray-200 text-gray-900 rounded-full font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:shadow-lg hover:-translate-y-1">Browse Projects</a>
+          </div>
+        </section>
 
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-3xl font-bold text-gray-800 text-center">
-                Academics
-              </h2>
-              <div className="flex justify-center items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          {/* Main Info */}
+          <div className="md:col-span-8 space-y-8">
+            {/* Academics Section */}
+            <section className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl shadow-sm border border-white dark:border-gray-800 hover:shadow-xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                  <span className="w-10 h-10 bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 rounded-xl flex items-center justify-center text-lg">🎓</span>
+                  Academics
+                </h2>
                 <button
                   onClick={toggleDetails}
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  className="text-sm font-medium text-sky-600 dark:text-sky-400 hover:text-sky-800 dark:hover:text-sky-300 bg-sky-50 dark:bg-sky-900/30 px-4 py-2 rounded-full transition-colors"
                 >
-                  {showDetails ? (
-                    <span>&#128065; Hide Details</span>
-                  ) : (
-                    <span>&#128064; Show Details</span>
-                  )}
+                  {showDetails ? "Hide Details" : "Show Details"}
                 </button>
               </div>
-            </div>
-            <ul className="space-y-3 text-gray-700">
-              <li>
-                <strong>2019</strong> - 10th Grade: 89% |
-                {showDetails && <span> Maths, Science: 98 marks |</span>} Aditya
-                School, Manavadar
-              </li>
-              <li>
-                <strong>2020-2021</strong> - 11th/12th Grade: 89% |
-                {showDetails && (
-                  <span> GUJCET: 80 marks | JEE: 93 Percentile |</span>
-                )}{" "}
-                Dream International School, Dhoraji
-              </li>
-              <li>
-                <strong>2021-2025</strong> - B.Tech in Computer Engineering |
-                {showDetails && (
-                  <span>
-                    {" "}
-                    CPI: 8 | GATE Qualified (First Attempt) | Graduated |
+
+              <div className="space-y-8 relative before:absolute before:inset-0 before:left-5 before:w-0.5 before:bg-gray-100 dark:before:bg-gray-800">
+                {[
+                  { year: "2025-Present", title: "Software Engineer", place: "Silvertouch Technology", detail: "6 months internship + Full-time Position" },
+                  { year: "2021-2025", title: "B.Tech in Computer Engineering", place: "VGEC, Ahmedabad", detail: "CPI: 8 | GATE Qualified (First Attempt)" },
+                  { year: "2020-2021", title: "12th Grade", place: "Dream International School", detail: "89% | JEE: 93 Percentile" },
+                ].map((edu, i) => (
+                  <div key={i} className="relative pl-12 group">
+                    <div className="absolute left-3.5 top-1.5 w-3.5 h-3.5 bg-white dark:bg-gray-900 border-2 border-sky-500 rounded-full z-10 group-hover:scale-150 transition-transform"></div>
+                    <span className="text-sm font-bold text-sky-500 uppercase tracking-wider">{edu.year}</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-1">{edu.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400">{edu.place}</p>
+                    {showDetails && <p className="mt-2 text-sm text-gray-500 dark:text-gray-500 italic">{edu.detail}</p>}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Achievements Section */}
+            <section className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl shadow-sm border border-white dark:border-gray-800 hover:shadow-xl transition-all duration-500">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                <span className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-lg">🏆</span>
+                Achievements
+              </h2>
+              <div className="grid gap-4">
+                <div className="p-4 bg-amber-50/50 dark:bg-amber-900/20 rounded-2xl border border-amber-100 dark:border-amber-900/30">
+                  <p className="font-bold text-gray-900 dark:text-white">GATE 2025 Qualified</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Qualified in the first attempt.</p>
+                </div>
+                <div className="p-4 bg-sky-50/50 dark:bg-sky-900/20 rounded-2xl border border-sky-100 dark:border-sky-900/30">
+                  <p className="font-bold text-gray-900 dark:text-white">Striver&apos;s SDE Sheet</p>
+                  <a href="https://takeuforward.org/profile/angelkoradiya" target="_blank" className="text-sm text-sky-600 dark:text-sky-400 font-medium hover:underline">View Progress Profile →</a>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          {/* Sidebar */}
+          <div className="md:col-span-4 space-y-8">
+            {/* Skills Section */}
+            <section id="skills" className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl shadow-sm border border-white dark:border-gray-800 hover:shadow-xl transition-all duration-500">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Skills</h2>
+              <div className="flex flex-wrap gap-2">
+                {["C/C++", "Python", "MERN Stack", "Next.js", "Java", "GenAI", "ML", "Deep Learning"].map((skill) => (
+                  <span key={skill} className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-bold hover:bg-sky-500 hover:text-white dark:hover:bg-sky-600 transition-colors cursor-default">
+                    {skill}
                   </span>
-                )}{" "}
-                Vishwakarma Government Engineering College, Ahmedabad
-              </li>
-              <li>
-                <strong>2025-Present</strong> - Software Engineer |
-                {showDetails && <span> 6 months internship + Full-time Position |</span>} Silvertouch
-                Technology
-              </li>
-            </ul>
-          </div>
+                ))}
+              </div>
+            </section>
 
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Hobbies</h2>
-            <ul className="grid grid-cols-3 gap-4 text-gray-700">
-              <li className="flex items-center">
-                <span className="font-semibold">Gaming</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Traveling</span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-semibold">Coding</span>
-              </li>
-            </ul>
+            {/* Platform Links */}
+            <section className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl shadow-sm border border-white dark:border-gray-800 hover:shadow-xl transition-all duration-500">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Competitive</h2>
+              <div className="space-y-4">
+                {dataStructuresAndAlgorithms.resources.map((resource, index) => (
+                  <a key={index} href={resource.link} target="_blank" className="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group">
+                    <div className="p-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm group-hover:scale-110 transition-transform">
+                      <Image src={resource.logo} alt={resource.name} width={24} height={24} />
+                    </div>
+                    <span className="font-bold text-gray-700 dark:text-gray-300 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{resource.name}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+
+            {/* Hobbies Section */}
+            <section className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl shadow-sm border border-white dark:border-gray-800 hover:shadow-xl transition-all duration-500">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Hobbies</h2>
+              <div className="flex justify-center gap-6">
+                {["🎮", "✈️", "💻"].map((emoji, i) => (
+                  <div key={i} className="text-3xl animate-bounce" style={{ animationDelay: `${i * 0.2}s` }}>{emoji}</div>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
-
-
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Achievements</h2>
-          <ul className="space-y-3 text-gray-700">
-            {showDetails && <li className="flex items-center">
-              <span className="font-semibold">GATE 2025 Qualified (First Attempt)</span>
-            </li>}
-            <li className="flex items-center">
-              <span className="font-semibold">Completed Striver&apos;s SDE Sheet - </span>
-              <a 
-                href="https://takeuforward.org/profile/angelkoradiya"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 ml-1"
-              >
-                View Profile
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">
-          {dataStructuresAndAlgorithms.title}
-        </h2>
-        <ul className="flex justify-center space-x-8">
-          {dataStructuresAndAlgorithms.resources.map((resource, index) => (
-            <li key={index} className="flex items-center">
-              <a
-                href={resource.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center group"
-              >
-                <Image
-                  src={resource.logo}
-                  alt={`${resource.name} logo`}
-                  width={32}
-                  height={32}
-                  className="mr-3 transition-transform transform group-hover:scale-110"
-                />
-                <span className="text-gray-900 font-semibold transition-colors group-hover:text-blue-500">
-                  {resource.name}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

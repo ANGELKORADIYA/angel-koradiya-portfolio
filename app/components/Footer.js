@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from './ThemeProvider';
 
 export default function Footer() {
+  const { darkMode } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +19,7 @@ export default function Footer() {
       name: "GitHub",
       link: "https://github.com/angelkoradiya",
       icon: "https://cdn-icons-png.flaticon.com/512/25/25231.png",
+      darkIcon: "https://cdn-icons-png.flaticon.com/512/25/25231.png", // GitHub icon is mostly dark-friendly
     },
     {
       name: "LinkedIn",
@@ -47,14 +50,12 @@ export default function Footer() {
     const { name, email, message } = formData;
 
     if (!name || !email || !message) {
-      toast.error('All fields are required.', {
-      });
+      toast.error('All fields are required.');
       return;
     }
 
     if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      toast.error('Please enter a valid email.', {
-      });
+      toast.error('Please enter a valid email.');
       return;
     }
 
@@ -68,70 +69,67 @@ export default function Footer() {
       });
 
       if (response.ok) {
-        toast.success('Message sent successfully!', {
-        });
+        toast.success('Message sent successfully!');
         setFormData({ name: '', email: '', message: '' });
       } else {
         throw new Error('Something went wrong. Please try again.');
       }
     } catch (error) {
-      toast.error('Failed to send the message.', {
-      });
+      toast.error('Failed to send the message.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <footer className="bg-gray-100 py-12">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold text-gray-800">Let&apos;s Connect! 📧</h3>
+    <footer className="bg-gray-100 dark:bg-gray-950 py-16 transition-colors duration-300 border-t border-gray-200 dark:border-gray-800">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Contact Form */}
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/5">
+          <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-8 flex items-center gap-3">
+            <span className="w-10 h-10 bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 rounded-xl flex items-center justify-center text-lg">📧</span>
+            Let&apos;s Connect!
+          </h3>
+          
           <ToastContainer
             position="bottom-right"
             autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
+            theme={darkMode ? "dark" : "light"}
           />
+          
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
+            <div className="group">
               <input
                 type="text"
                 name="name"
                 placeholder="Your Name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-sky-500 rounded-2xl outline-none transition-all dark:text-white dark:placeholder-gray-500"
                 required
               />
             </div>
             
-            <div>
+            <div className="group">
               <input
                 type="email"
                 name="email"
                 placeholder="Your Email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-sky-500 rounded-2xl outline-none transition-all dark:text-white dark:placeholder-gray-500"
                 required
               />
             </div>
             
-            <div>
+            <div className="group">
               <textarea
                 name="message"
                 placeholder="Your Message"
                 value={formData.message}
                 onChange={handleChange}
                 rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-sky-500 rounded-2xl outline-none transition-all dark:text-white dark:placeholder-gray-500 resize-none"
                 required
               ></textarea>
             </div>
@@ -139,41 +137,57 @@ export default function Footer() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400"
+              className="w-full bg-sky-600 text-white font-bold py-4 px-6 rounded-2xl hover:bg-sky-700 transition-all disabled:bg-sky-400 shadow-lg shadow-sky-500/20 active:scale-[0.98]"
             >
               {loading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
         
-        <div className="space-y-6 flex flex-col items-center">
-          <h3 className="text-2xl font-bold text-gray-800">Stay Connected 🌐</h3>
-          <div className="flex flex-col space-y-4 w-full max-w-md">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-4 text-gray-700 hover:text-blue-600 transition-colors group pl-28"
-              >             
-                <div className="w-12 h-12 flex items-center justify-center">
-                  <Image src={social.icon} alt={social.name} width={32} height={32} className="group-hover:scale-110 transition-transform" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-medium">{social.name}</span>
-                  <span className="text-sm text-gray-500">
-                    {social.name === "Email" ? "koradiyaangel11@gmail.com" :
-                     social.name === "GitHub" ? "@angelkoradiya" :
-                     social.name === "LinkedIn" ? "@angel-koradiya" :
-                     "@ANGELKORADIYA"}
-                  </span>
-                </div>
-              </a>
-            ))}
+        {/* Social Links & Info */}
+        <div className="flex flex-col justify-between py-4">
+          <div className="space-y-8">
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-3">
+              <span className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center text-lg">🌐</span>
+              Stay Connected
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group hover:shadow-lg hover:shadow-sky-500/5"
+                >             
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-xl group-hover:scale-110 transition-transform">
+                    <Image 
+                      src={social.icon} 
+                      alt={social.name} 
+                      width={24} 
+                      height={24} 
+                      className={darkMode && social.name === "GitHub" ? "invert" : ""}
+                    />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-bold text-gray-900 dark:text-white text-sm">{social.name}</span>
+                    <span className="text-xs text-gray-500 truncate">
+                      {social.name === "Email" ? "koradiyaangel11@gmail.com" :
+                       social.name === "GitHub" ? "@angelkoradiya" :
+                       social.name === "LinkedIn" ? "@angel-koradiya" :
+                       "@ANGELKORADIYA"}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-          <div className="mt-8 text-center text-gray-600 w-full">
-            <p>&copy; {new Date().getFullYear()} Angel Koradiya. All rights reserved.</p>
+
+          <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center md:text-left">
+            <p className="text-gray-500 dark:text-gray-500 text-sm font-medium">
+              &copy; {new Date().getFullYear()} <span className="text-gray-900 dark:text-white">Angel Koradiya</span>. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
