@@ -1,119 +1,189 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const canvasRef = useRef(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const lastPos = useRef({ x: 0, y: 0 });
+  const velocity = useRef({ x: 0, y: 0 });
+  const particles = useRef([]);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [clicks, setClicks] = useState([]);
-  const cursorRef = useRef(null);
-  const trailRef = useRef([]);
+  const frameRef = useRef();
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
     const onMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+      mousePos.current = { x: e.clientX, y: e.clientY };
+      if (!isVisible) setIsVisible(true);
     };
 
     const onMouseDown = (e) => {
-      const id = Date.now();
-      setClicks((prev) => [...prev, { x: e.clientX, y: e.clientY, id }]);
-      setTimeout(() => {
-        setClicks((prev) => prev.filter((click) => click.id !== id));
-      }, 600);
-    };
-
-    const onMouseOver = (e) => {
-      if (
-        e.target.tagName === "A" ||
-        e.target.tagName === "BUTTON" ||
-        e.target.closest("a") ||
-        e.target.closest("button") ||
-        e.target.style.cursor === "pointer"
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+      // Click burst effect
+      const count = 20;
+      const color = isHovering ? "rgba(251, 191, 36," : "rgba(14, 165, 233,";
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2 + Math.random();
+        const speed = 2 + Math.random() * 5;
+        particles.current.push({
+          x: e.clientX,
+          y: e.clientY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1.0,
+          decay: 0.015 + Math.random() * 0.02,
+          size: 4 + Math.random() * 4,
+          colorBase: color,
+        });
       }
     };
 
-    const onMouseLeave = () => {
-      setIsVisible(false);
+    const onMouseOver = (e) => {
+      const target = e.target;
+      const isInteractive = 
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.closest("a") ||
+        target.closest("button") ||
+        (target instanceof HTMLElement && getComputedStyle(target).cursor === "pointer");
+      
+      setIsHovering(isInteractive);
     };
+
+    const onMouseLeave = () => setIsVisible(false);
 
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mouseover", onMouseOver);
     document.addEventListener("mouseleave", onMouseLeave);
 
+    const update = () => {
+      // Calculate velocity
+      velocity.current = {
+        x: mousePos.current.x - lastPos.current.x,
+        y: mousePos.current.y - lastPos.current.y,
+      };
+      lastPos.current = { ...mousePos.current };
+
+      const speed = Math.hypot(velocity.current.x, velocity.current.y);
+      const isMoving = speed > 0.5;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (isVisible) {
+        // Emit particles
+        const emissionRate = isMoving ? (isHovering ? 5 : 3) : (isHovering ? 3 : 1);
+        const color = isHovering ? "rgba(251, 191, 36," : "rgba(56, 189, 248,";
+        
+        for (let i = 0; i < emissionRate; i++) {
+          if (isMoving) {
+            // Booster Effect: opposite to movement
+            const angle = Math.atan2(velocity.current.y, velocity.current.x) + Math.PI + (Math.random() - 0.5) * 0.5;
+            const pSpeed = 1 + Math.random() * 4;
+            particles.current.push({
+              x: mousePos.current.x,
+              y: mousePos.current.y,
+              vx: Math.cos(angle) * pSpeed,
+              vy: Math.sin(angle) * pSpeed,
+              life: 1.0,
+              decay: 0.02 + Math.random() * 0.03,
+              size: 2 + Math.random() * 4,
+              colorBase: color,
+            });
+          } else {
+            // Fountain Effect: floats up
+            const angle = -Math.PI / 2 + (Math.random() - 0.5) * (Math.PI * 0.8);
+            const pSpeed = 0.5 + Math.random() * 2;
+            particles.current.push({
+              x: mousePos.current.x,
+              y: mousePos.current.y,
+              vx: Math.cos(angle) * pSpeed,
+              vy: Math.sin(angle) * pSpeed,
+              life: 1.0,
+              decay: 0.015 + Math.random() * 0.02,
+              size: 1 + Math.random() * 3,
+              colorBase: isHovering ? "rgba(251, 191, 36," : "rgba(186, 230, 253,",
+            });
+          }
+        }
+
+        // Draw and update particles
+        particles.current = particles.current.filter((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= p.decay;
+          p.size *= 0.985;
+
+          if (p.life <= 0) return false;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `${p.colorBase}${p.life.toFixed(2)})`;
+          ctx.fill();
+          return true;
+        });
+
+        // Draw Cursor Core
+        const coreSize = isHovering ? 8 : 5;
+        ctx.beginPath();
+        ctx.arc(mousePos.current.x, mousePos.current.y, coreSize, 0, Math.PI * 2);
+        ctx.fillStyle = isHovering ? "#fbbf24" : "#0ea5e9"; // amber-400 or sky-500
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = isHovering ? "rgba(251, 191, 36, 0.6)" : "rgba(14, 165, 233, 0.6)";
+        ctx.fill();
+        ctx.shadowBlur = 0; // Reset shadow for next frame
+
+        // Draw outer ring
+        ctx.beginPath();
+        ctx.arc(mousePos.current.x, mousePos.current.y, isHovering ? 15 : 12, 0, Math.PI * 2);
+        ctx.strokeStyle = isHovering ? "rgba(251, 191, 36, 0.3)" : "rgba(14, 165, 233, 0.3)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // Performance cap
+      if (particles.current.length > 250) {
+        particles.current = particles.current.slice(-250);
+      }
+
+      frameRef.current = requestAnimationFrame(update);
+    };
+
+    frameRef.current = requestAnimationFrame(update);
+
     return () => {
+      window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseover", onMouseOver);
       document.removeEventListener("mouseleave", onMouseLeave);
+      cancelAnimationFrame(frameRef.current);
     };
-  }, []);
-
-  if (!isVisible) return null;
+  }, [isHovering, isVisible]);
 
   return (
     <>
       <style jsx global>{`
-        @keyframes boom {
-          0% { transform: scale(0); opacity: 0.8; }
-          100% { transform: scale(3); opacity: 0; }
-        }
-        @keyframes particle {
-          0% { transform: translate(0, 0) scale(1); opacity: 1; }
-          100% { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) scale(0); opacity: 0; }
+        body, a, button, [role="button"], .interactive {
+          cursor: none !important;
         }
       `}</style>
-
-      {/* Main Cursor Core */}
-      <div
-        className="fixed top-0 left-0 w-4 h-4 bg-sky-500 rounded-full pointer-events-none z-[9999] transition-transform duration-100 ease-out shadow-[0_0_15px_rgba(14,165,233,0.8)]"
-        style={{
-          transform: `translate(${position.x - 8}px, ${position.y - 8}px) scale(${isHovering ? 2.5 : 1})`,
-        }}
-      />
-
-      {/* Flowing Booster Effect (Trailing Ring) */}
-      <div
-        className="fixed top-0 left-0 w-8 h-8 border border-sky-400 rounded-full pointer-events-none z-[9998] transition-transform duration-300 ease-out opacity-50"
-        style={{
-          transform: `translate(${position.x - 16}px, ${position.y - 16}px) scale(${isHovering ? 1.8 : 1.2})`,
-        }}
-      />
-
-      {/* Click Boom Effect */}
-      {clicks.map((click) => (
-        <div
-          key={click.id}
-          className="fixed top-0 left-0 w-10 h-10 border-2 border-sky-400 rounded-full pointer-events-none z-[9997]"
-          style={{
-            left: click.x - 20,
-            top: click.y - 20,
-            animation: "boom 0.6s ease-out forwards",
-          }}
-        />
-      ))}
       
-      {/* Particle burst on click */}
-      {clicks.map((click) => (
-        [...Array(8)].map((_, i) => (
-          <div
-            key={`${click.id}-${i}`}
-            className="fixed top-0 left-0 w-2 h-2 bg-sky-500 rounded-full pointer-events-none z-[9997]"
-            style={{
-              left: click.x - 4,
-              top: click.y - 4,
-              '--tw-translate-x': `${Math.cos((i * 45) * Math.PI / 180) * 40}px`,
-              '--tw-translate-y': `${Math.sin((i * 45) * Math.PI / 180) * 40}px`,
-              animation: "particle 0.6s ease-out forwards",
-            }}
-          />
-        ))
-      ))}
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 w-full h-full pointer-events-none z-[9999]"
+      />
     </>
   );
 }
