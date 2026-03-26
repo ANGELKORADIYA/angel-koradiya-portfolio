@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
+import Link from "next/link";
+
 const dataStructuresAndAlgorithms = {
   title: "Competitive Programming",
   resources: [
@@ -72,7 +74,7 @@ export default function Home() {
           </p>
           <div className="mt-10 flex justify-center gap-4">
             <a href="#skills" className="px-8 py-3 bg-gray-900 dark:bg-white dark:text-gray-900 text-white rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all hover:shadow-xl hover:-translate-y-1">View My Skills</a>
-            <a href="/projects" className="px-8 py-3 bg-white dark:bg-gray-800 dark:text-white dark:border-gray-700 border border-gray-200 text-gray-900 rounded-full font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:shadow-lg hover:-translate-y-1">Browse Projects</a>
+            <Link href="/projects" className="px-8 py-3 bg-white dark:bg-gray-800 dark:text-white dark:border-gray-700 border border-gray-200 text-gray-900 rounded-full font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:shadow-lg hover:-translate-y-1">Browse Projects</Link>
           </div>
         </section>
 

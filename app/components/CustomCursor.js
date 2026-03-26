@@ -147,18 +147,18 @@ export default function CustomCursor() {
         ctx.save();
         ctx.translate(followX, followY);
         
-        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 45 + h * 25);
+        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 35 + h * 20);
         gradient.addColorStop(0, theme.secondary);
         gradient.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(0, 0, 45 + h * 25, 0, Math.PI * 2);
+        ctx.arc(0, 0, 35 + h * 20, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.rotate(rotation.current);
         ctx.beginPath();
         ctx.setLineDash([4, 8 + (1-h) * 4]);
-        ctx.arc(0, 0, 20 + h * 12, 0, Math.PI * 2);
+        ctx.arc(0, 0, 15 + h * 10, 0, Math.PI * 2);
         ctx.strokeStyle = theme.primary;
         ctx.lineWidth = 1;
         ctx.stroke();
@@ -167,14 +167,14 @@ export default function CustomCursor() {
         ctx.setLineDash([]);
         for (let i = 0; i < 3; i++) {
           ctx.beginPath();
-          ctx.arc(0, 0, 26 + h * 15, (i * Math.PI * 2) / 3, (i * Math.PI * 2) / 3 + Math.PI / 6);
+          ctx.arc(0, 0, 20 + h * 12, (i * Math.PI * 2) / 3, (i * Math.PI * 2) / 3 + Math.PI / 6);
           ctx.stroke();
         }
         ctx.restore();
 
         // 3. Brackets
-        const bSize = 28 + h * 18;
-        const bLen = 8 + h * 4;
+        const bSize = 22 + h * 14;
+        const bLen = 6 + h * 3;
         ctx.strokeStyle = theme.primary;
         ctx.globalAlpha = 0.3 + h * 0.7;
         ctx.lineWidth = 1;
@@ -194,7 +194,7 @@ export default function CustomCursor() {
 
         // 4. Data HUD (Top Right)
         ctx.save();
-        ctx.translate(followX + 35, followY - 25);
+        ctx.translate(followX + 28, followY - 20);
         
         ctx.fillStyle = theme.primary;
         ctx.font = "bold 8px monospace";
@@ -243,9 +243,9 @@ export default function CustomCursor() {
 
         // 7. Core Dot
         ctx.beginPath();
-        ctx.arc(targetX, targetY, 4 + h * 2, 0, Math.PI * 2);
+        ctx.arc(targetX, targetY, 3 + h * 1.5, 0, Math.PI * 2);
         ctx.fillStyle = theme.primary;
-        ctx.shadowBlur = 12 + h * 12;
+        ctx.shadowBlur = 10 + h * 10;
         ctx.shadowColor = theme.glow;
         ctx.fill();
         ctx.shadowBlur = 0;
