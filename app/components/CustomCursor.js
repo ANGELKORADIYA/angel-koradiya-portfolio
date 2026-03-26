@@ -4,14 +4,38 @@ import { useEffect, useRef, useState } from "react";
 export default function CustomCursor() {
   const canvasRef = useRef(null);
   const mousePos = useRef({ x: 0, y: 0 });
+  const lerpPos = useRef({ x: 0, y: 0 }); 
   const lastPos = useRef({ x: 0, y: 0 });
-  const velocity = useRef({ x: 0, y: 0 });
   const particles = useRef([]);
+  const rotation = useRef(0);
+  const hoverProgress = useRef(0); // For smooth transition of hover effects
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const frameRef = useRef();
 
+  const COLORS = {
+    DEFAULT: {
+      primary: "#0ea5e9", // sky-500
+      secondary: "rgba(14, 165, 233, 0.2)",
+      glow: "rgba(14, 165, 233, 0.6)",
+      particle: "rgba(56, 189, 248, "
+    },
+    HOVER: {
+      primary: "#f59e0b", // amber-500
+      secondary: "rgba(245, 158, 11, 0.2)",
+      glow: "rgba(245, 158, 11, 0.6)",
+      particle: "rgba(251, 191, 36, "
+    }
+  };
+
+  const lerp = (start, end, factor) => start + (end - start) * factor;
+
   useEffect(() => {
+    // Disable on touch devices
+    if (typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -25,25 +49,28 @@ export default function CustomCursor() {
 
     const onMouseMove = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
-      if (!isVisible) setIsVisible(true);
+      if (!isVisible) {
+        setIsVisible(true);
+        lerpPos.current = { ...mousePos.current };
+      }
     };
 
     const onMouseDown = (e) => {
-      // Click burst effect
-      const count = 20;
-      const color = isHovering ? "rgba(251, 191, 36," : "rgba(14, 165, 233,";
+      const count = 15;
+      const theme = isHovering ? COLORS.HOVER : COLORS.DEFAULT;
       for (let i = 0; i < count; i++) {
         const angle = (i / count) * Math.PI * 2 + Math.random();
-        const speed = 2 + Math.random() * 5;
+        const speed = 3 + Math.random() * 4;
         particles.current.push({
           x: e.clientX,
           y: e.clientY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1.0,
-          decay: 0.015 + Math.random() * 0.02,
-          size: 4 + Math.random() * 4,
-          colorBase: color,
+          decay: 0.015 + Math.random() * 0.01,
+          size: 2 + Math.random() * 3,
+          color: theme.particle,
+          isSquare: Math.random() > 0.4
         });
       }
     };
@@ -68,93 +95,125 @@ export default function CustomCursor() {
     document.addEventListener("mouseleave", onMouseLeave);
 
     const update = () => {
-      // Calculate velocity
-      velocity.current = {
-        x: mousePos.current.x - lastPos.current.x,
-        y: mousePos.current.y - lastPos.current.y,
-      };
-      lastPos.current = { ...mousePos.current };
+      // 1. Update Lerp Values
+      lerpPos.current.x = lerp(lerpPos.current.x, mousePos.current.x, 0.12);
+      lerpPos.current.y = lerp(lerpPos.current.y, mousePos.current.y, 0.12);
+      
+      const targetHover = isHovering ? 1 : 0;
+      hoverProgress.current = lerp(hoverProgress.current, targetHover, 0.15);
 
-      const speed = Math.hypot(velocity.current.x, velocity.current.y);
-      const isMoving = speed > 0.5;
+      rotation.current += 0.02 + (hoverProgress.current * 0.03);
 
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (isVisible) {
-        // Emit particles
-        const emissionRate = isMoving ? (isHovering ? 5 : 3) : (isHovering ? 3 : 1);
-        const color = isHovering ? "rgba(251, 191, 36," : "rgba(56, 189, 248,";
-        
-        for (let i = 0; i < emissionRate; i++) {
-          if (isMoving) {
-            // Booster Effect: opposite to movement
-            const angle = Math.atan2(velocity.current.y, velocity.current.x) + Math.PI + (Math.random() - 0.5) * 0.5;
-            const pSpeed = 1 + Math.random() * 4;
-            particles.current.push({
-              x: mousePos.current.x,
-              y: mousePos.current.y,
-              vx: Math.cos(angle) * pSpeed,
-              vy: Math.sin(angle) * pSpeed,
-              life: 1.0,
-              decay: 0.02 + Math.random() * 0.03,
-              size: 2 + Math.random() * 4,
-              colorBase: color,
-            });
-          } else {
-            // Fountain Effect: floats up
-            const angle = -Math.PI / 2 + (Math.random() - 0.5) * (Math.PI * 0.8);
-            const pSpeed = 0.5 + Math.random() * 2;
-            particles.current.push({
-              x: mousePos.current.x,
-              y: mousePos.current.y,
-              vx: Math.cos(angle) * pSpeed,
-              vy: Math.sin(angle) * pSpeed,
-              life: 1.0,
-              decay: 0.015 + Math.random() * 0.02,
-              size: 1 + Math.random() * 3,
-              colorBase: isHovering ? "rgba(251, 191, 36," : "rgba(186, 230, 253,",
-            });
-          }
-        }
+        // Theme Interpolation
+        const h = hoverProgress.current;
+        const theme = {
+          primary: h > 0.5 ? COLORS.HOVER.primary : COLORS.DEFAULT.primary,
+          secondary: h > 0.5 ? COLORS.HOVER.secondary : COLORS.DEFAULT.secondary,
+          glow: h > 0.5 ? COLORS.HOVER.glow : COLORS.DEFAULT.glow
+        };
 
-        // Draw and update particles
+        const targetX = mousePos.current.x;
+        const targetY = mousePos.current.y;
+        const followX = lerpPos.current.x;
+        const followY = lerpPos.current.y;
+
+        // 2. Draw HUD Elements (Trailing)
+        ctx.save();
+        ctx.translate(followX, followY);
+        
+        // Background Glow
+        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 40 + h * 20);
+        gradient.addColorStop(0, theme.secondary);
+        gradient.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(0, 0, 40 + h * 20, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner dashed ring
+        ctx.rotate(rotation.current);
+        ctx.beginPath();
+        ctx.setLineDash([4, 8 + (1-h) * 4]);
+        ctx.arc(0, 0, 18 + h * 10, 0, Math.PI * 2);
+        ctx.strokeStyle = theme.primary;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Outer segments
+        ctx.rotate(-rotation.current * 2);
+        ctx.setLineDash([]);
+        ctx.lineWidth = 1.5;
+        for (let i = 0; i < 4; i++) {
+          ctx.beginPath();
+          ctx.arc(0, 0, 24 + h * 12, (i * Math.PI * 2) / 4, (i * Math.PI * 2) / 4 + Math.PI / 6);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 3. Brackets (Instant tracking)
+        const bSize = 25 + h * 15;
+        const bLen = 6 + h * 4;
+        const opacity = 0.2 + h * 0.8;
+        ctx.strokeStyle = theme.primary.replace(")", `, ${opacity})`);
+        ctx.lineWidth = 1;
+        
+        const drawBracket = (x, y, xDir, yDir) => {
+          ctx.beginPath();
+          ctx.moveTo(x, y + bLen * yDir);
+          ctx.lineTo(x, y);
+          ctx.lineTo(x + bLen * xDir, y);
+          ctx.stroke();
+        };
+
+        drawBracket(targetX - bSize, targetY - bSize, 1, 1);
+        drawBracket(targetX + bSize, targetY - bSize, -1, 1);
+        drawBracket(targetX - bSize, targetY + bSize, 1, -1);
+        drawBracket(targetX + bSize, targetY + bSize, -1, -1);
+
+        // 4. Draw Particles
         particles.current = particles.current.filter((p) => {
           p.x += p.vx;
           p.y += p.vy;
           p.life -= p.decay;
-          p.size *= 0.985;
+          p.vx *= 0.97;
+          p.vy *= 0.97;
 
           if (p.life <= 0) return false;
 
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `${p.colorBase}${p.life.toFixed(2)})`;
-          ctx.fill();
+          ctx.fillStyle = `${p.color}${p.life.toFixed(2)})`;
+          if (p.isSquare) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.life * Math.PI);
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+            ctx.restore();
+          } else {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
           return true;
         });
 
-        // Draw Cursor Core
-        const coreSize = isHovering ? 8 : 5;
+        // 5. Draw Core Dot
         ctx.beginPath();
-        ctx.arc(mousePos.current.x, mousePos.current.y, coreSize, 0, Math.PI * 2);
-        ctx.fillStyle = isHovering ? "#fbbf24" : "#0ea5e9"; // amber-400 or sky-500
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = isHovering ? "rgba(251, 191, 36, 0.6)" : "rgba(14, 165, 233, 0.6)";
+        ctx.arc(targetX, targetY, 3 + h * 2, 0, Math.PI * 2);
+        ctx.fillStyle = theme.primary;
+        ctx.shadowBlur = 10 + h * 10;
+        ctx.shadowColor = theme.glow;
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset shadow for next frame
+        ctx.shadowBlur = 0;
 
-        // Draw outer ring
-        ctx.beginPath();
-        ctx.arc(mousePos.current.x, mousePos.current.y, isHovering ? 15 : 12, 0, Math.PI * 2);
-        ctx.strokeStyle = isHovering ? "rgba(251, 191, 36, 0.3)" : "rgba(14, 165, 233, 0.3)";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
-
-      // Performance cap
-      if (particles.current.length > 250) {
-        particles.current = particles.current.slice(-250);
+        // 6. Coordinates (Very subtle, follow LERP)
+        ctx.fillStyle = theme.primary;
+        ctx.globalAlpha = 0.3;
+        ctx.font = "7px monospace";
+        ctx.fillText(`X:${Math.round(targetX)}`, followX + 25, followY - 15);
+        ctx.fillText(`Y:${Math.round(targetY)}`, followX + 25, followY - 7);
+        ctx.globalAlpha = 1.0;
       }
 
       frameRef.current = requestAnimationFrame(update);
@@ -175,8 +234,10 @@ export default function CustomCursor() {
   return (
     <>
       <style jsx global>{`
-        body, a, button, [role="button"], .interactive {
-          cursor: none !important;
+        @media (hover: hover) and (pointer: fine) {
+          body, a, button, [role="button"], .interactive {
+            cursor: none !important;
+          }
         }
       `}</style>
       
