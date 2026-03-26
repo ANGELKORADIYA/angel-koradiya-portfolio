@@ -7,8 +7,9 @@ export default function CustomCursor() {
   const lerpPos = useRef({ x: 0, y: 0 }); 
   const lastPos = useRef({ x: 0, y: 0 });
   const particles = useRef([]);
+  const clickRipples = useRef([]);
   const rotation = useRef(0);
-  const hoverProgress = useRef(0); // For smooth transition of hover effects
+  const hoverProgress = useRef(0);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const frameRef = useRef();
@@ -31,7 +32,6 @@ export default function CustomCursor() {
   const lerp = (start, end, factor) => start + (end - start) * factor;
 
   useEffect(() => {
-    // Disable on touch devices
     if (typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
       return;
     }
@@ -56,21 +56,33 @@ export default function CustomCursor() {
     };
 
     const onMouseDown = (e) => {
-      const count = 15;
       const theme = isHovering ? COLORS.HOVER : COLORS.DEFAULT;
+      
+      // Added Expanding Rings (Ripples) as requested
+      clickRipples.current.push({
+        x: e.clientX,
+        y: e.clientY,
+        radius: 0,
+        maxRadius: 55,
+        life: 1.0,
+        color: theme.primary
+      });
+
+      // Sharp digital particles (not "bubbles")
+      const count = 12;
       for (let i = 0; i < count; i++) {
-        const angle = (i / count) * Math.PI * 2 + Math.random();
-        const speed = 3 + Math.random() * 4;
+        const angle = (Math.floor(Math.random() * 8) * Math.PI / 4);
+        const speed = 4 + Math.random() * 3;
         particles.current.push({
           x: e.clientX,
           y: e.clientY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1.0,
-          decay: 0.015 + Math.random() * 0.01,
-          size: 2 + Math.random() * 3,
+          decay: 0.04 + Math.random() * 0.02,
+          size: 1.5,
           color: theme.particle,
-          isSquare: Math.random() > 0.4
+          isSquare: true,
         });
       }
     };
@@ -95,19 +107,16 @@ export default function CustomCursor() {
     document.addEventListener("mouseleave", onMouseLeave);
 
     const update = () => {
-      // 1. Update Lerp Values
       lerpPos.current.x = lerp(lerpPos.current.x, mousePos.current.x, 0.12);
       lerpPos.current.y = lerp(lerpPos.current.y, mousePos.current.y, 0.12);
       
       const targetHover = isHovering ? 1 : 0;
       hoverProgress.current = lerp(hoverProgress.current, targetHover, 0.15);
-
       rotation.current += 0.02 + (hoverProgress.current * 0.03);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (isVisible) {
-        // Theme Interpolation
         const h = hoverProgress.current;
         const theme = {
           primary: h > 0.5 ? COLORS.HOVER.primary : COLORS.DEFAULT.primary,
@@ -120,44 +129,54 @@ export default function CustomCursor() {
         const followX = lerpPos.current.x;
         const followY = lerpPos.current.y;
 
-        // 2. Draw HUD Elements (Trailing)
+        // 1. Draw Click Ripples (Expanding Rings)
+        clickRipples.current = clickRipples.current.filter(r => {
+          r.radius += (r.maxRadius - r.radius) * 0.12;
+          r.life -= 0.04;
+          if (r.life <= 0) return false;
+
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `${r.color}${Math.floor(r.life * 255).toString(16).padStart(2, '0')})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          return true;
+        });
+
+        // 2. Draw HUD Rings (Trailing)
         ctx.save();
         ctx.translate(followX, followY);
         
-        // Background Glow
-        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 40 + h * 20);
+        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 45 + h * 25);
         gradient.addColorStop(0, theme.secondary);
         gradient.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(0, 0, 40 + h * 20, 0, Math.PI * 2);
+        ctx.arc(0, 0, 45 + h * 25, 0, Math.PI * 2);
         ctx.fill();
 
-        // Inner dashed ring
         ctx.rotate(rotation.current);
         ctx.beginPath();
         ctx.setLineDash([4, 8 + (1-h) * 4]);
-        ctx.arc(0, 0, 18 + h * 10, 0, Math.PI * 2);
+        ctx.arc(0, 0, 20 + h * 12, 0, Math.PI * 2);
         ctx.strokeStyle = theme.primary;
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Outer segments
-        ctx.rotate(-rotation.current * 2);
+        ctx.rotate(-rotation.current * 2.5);
         ctx.setLineDash([]);
-        ctx.lineWidth = 1.5;
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
           ctx.beginPath();
-          ctx.arc(0, 0, 24 + h * 12, (i * Math.PI * 2) / 4, (i * Math.PI * 2) / 4 + Math.PI / 6);
+          ctx.arc(0, 0, 26 + h * 15, (i * Math.PI * 2) / 3, (i * Math.PI * 2) / 3 + Math.PI / 6);
           ctx.stroke();
         }
         ctx.restore();
 
-        // 3. Brackets (Instant tracking)
-        const bSize = 25 + h * 15;
-        const bLen = 6 + h * 4;
-        const opacity = 0.2 + h * 0.8;
-        ctx.strokeStyle = theme.primary.replace(")", `, ${opacity})`);
+        // 3. Brackets
+        const bSize = 28 + h * 18;
+        const bLen = 8 + h * 4;
+        ctx.strokeStyle = theme.primary;
+        ctx.globalAlpha = 0.3 + h * 0.7;
         ctx.lineWidth = 1;
         
         const drawBracket = (x, y, xDir, yDir) => {
@@ -167,53 +186,69 @@ export default function CustomCursor() {
           ctx.lineTo(x + bLen * xDir, y);
           ctx.stroke();
         };
-
         drawBracket(targetX - bSize, targetY - bSize, 1, 1);
         drawBracket(targetX + bSize, targetY - bSize, -1, 1);
         drawBracket(targetX - bSize, targetY + bSize, 1, -1);
         drawBracket(targetX + bSize, targetY + bSize, -1, -1);
+        ctx.globalAlpha = 1.0;
 
-        // 4. Draw Particles
+        // 4. Data HUD (Top Right)
+        ctx.save();
+        ctx.translate(followX + 35, followY - 25);
+        
+        ctx.fillStyle = theme.primary;
+        ctx.font = "bold 8px monospace";
+        ctx.globalAlpha = 0.8;
+        ctx.fillText(isHovering ? ">> EXECUTE" : ">> NAVIGATE", 0, 0);
+
+        const hash = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase().padStart(6, '0');
+        ctx.font = "7px monospace";
+        ctx.globalAlpha = 0.4;
+        ctx.fillText(`0x${hash}`, 0, 10);
+
+        for (let i = 0; i < 5; i++) {
+          const barHeight = 2 + (i * 2.5);
+          const isActive = i < (isHovering ? 5 : 3);
+          ctx.globalAlpha = isActive ? 0.6 : 0.15;
+          ctx.fillRect(i * 4 - 30, 2, 2, -barHeight);
+        }
+        ctx.restore();
+
+        /* 
+        // 5. Coordinates (Bottom Right - opposite to NAVIGATE vertically)
+        ctx.save();
+        ctx.translate(followX + 35, followY + 25); // Positioned at bottom right
+        ctx.fillStyle = theme.primary;
+        ctx.font = "7px monospace";
+        ctx.globalAlpha = 0.4;
+        ctx.fillText(`X:${Math.round(targetX)}`, 0, 0);
+        ctx.fillText(`Y:${Math.round(targetY)}`, 0, 8);
+        ctx.restore();
+        */
+
+        // 6. Draw Particles
         particles.current = particles.current.filter((p) => {
           p.x += p.vx;
           p.y += p.vy;
           p.life -= p.decay;
-          p.vx *= 0.97;
-          p.vy *= 0.97;
+          p.vx *= 0.96;
+          p.vy *= 0.96;
 
           if (p.life <= 0) return false;
 
           ctx.fillStyle = `${p.color}${p.life.toFixed(2)})`;
-          if (p.isSquare) {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.life * Math.PI);
-            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-            ctx.restore();
-          } else {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-          }
+          ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
           return true;
         });
 
-        // 5. Draw Core Dot
+        // 7. Core Dot
         ctx.beginPath();
-        ctx.arc(targetX, targetY, 3 + h * 2, 0, Math.PI * 2);
+        ctx.arc(targetX, targetY, 4 + h * 2, 0, Math.PI * 2);
         ctx.fillStyle = theme.primary;
-        ctx.shadowBlur = 10 + h * 10;
+        ctx.shadowBlur = 12 + h * 12;
         ctx.shadowColor = theme.glow;
         ctx.fill();
         ctx.shadowBlur = 0;
-
-        // 6. Coordinates (Very subtle, follow LERP)
-        ctx.fillStyle = theme.primary;
-        ctx.globalAlpha = 0.3;
-        ctx.font = "7px monospace";
-        ctx.fillText(`X:${Math.round(targetX)}`, followX + 25, followY - 15);
-        ctx.fillText(`Y:${Math.round(targetY)}`, followX + 25, followY - 7);
-        ctx.globalAlpha = 1.0;
       }
 
       frameRef.current = requestAnimationFrame(update);
