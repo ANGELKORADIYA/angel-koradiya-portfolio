@@ -42,7 +42,9 @@ const projects = [
     title: 'Bit Stash - Code Snippet Sharing Platform',
     description: 'Bit Stash is a Spring Boot application for uploading and sharing code snippets, backed by PostgreSQL. Runs on single Docker Compose command and deploys effortlessly to the cloud via Render.',
     link:'https://bit-stash.vercel.app/',
-    link2:'https://bit-stash.vercel.app/'
+    link2:'https://bit-stash.vercel.app/',
+    logo: '/zenlight_logo.png', 
+    logo: 'https://bit-stash.vercel.app/logo.svg',
   },
   {
     title: 'Astroid Game',
