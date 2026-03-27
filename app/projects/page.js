@@ -39,25 +39,10 @@ const projects = [
     logo: '/zenlight_logo.png', 
   },
   {
-    title: 'Code Every Where',
-    description: 'Codeseverywhere is a Spring Boot application for uploading and sharing code snippets, backed by PostgreSQL. Runs on single Docker Compose command and deploys effortlessly to the cloud via Render.',
-    link:'https://codes-every-where.vercel.app/',
-    link2:'https://github.com/ANGELKORADIYA/codes-every-where'
-  },
-  {
-    title: 'Schedulling Algorithm with Visualizing Gantt Chart for Operating Systems',
-    description: 'A C program built during college that visualizes CPU scheduling algorithms — FCFS, SJF, SRTN, Priority (preemptive & non-preemptive), and Round Robin — using the graphics.h library. Enter your processes and instantly see a Gantt chart along with turnaround and waiting time stats. Note: Round Robin was implemented based on college-level understanding and may not cover all edge cases perfectly.',
-    link2:'https://github.com/ANGELKORADIYA/scheduling_algo_with_graphics.h'
-  },
-  {
-    title: '1930 Helpline Improvement',
-    description: 'A machine learning project built at the Rajasthan Police Hackathon to detect fake complaints on the 1930 helpline. Uses scikit-learn to analyze and classify police complaint data. Not fully completed, but a great hands-on introduction to ML concepts.',
-    link2: 'https://github.com/Kathan0920/RJPOLICE_HACK_1202_CyberCrew_9',
-  },
-  {
-    title: 'Public Library Management',
-    description: 'A comprehensive management system for public libraries that streamlines book lending and user registrations. Dropped idea after hackathon.',
-    link2: 'https://github.com/ANGELKORADIYA/public-library',
+    title: 'Bit Stash - Code Snippet Sharing Platform',
+    description: 'Bit Stash is a Spring Boot application for uploading and sharing code snippets, backed by PostgreSQL. Runs on single Docker Compose command and deploys effortlessly to the cloud via Render.',
+    link:'https://bit-stash.vercel.app/',
+    link2:'https://bit-stash.vercel.app/'
   },
   {
     title: 'Astroid Game',
@@ -77,6 +62,21 @@ const projects = [
     description: 'An interactive tool for testing and generating regular expressions with real-time examples and pattern matching. Currently under development with enhanced linguistic features planned.',
     link: 'https://regex-studio.vercel.app/',
     logo: 'https://regex-studio.vercel.app/favicon.ico',
+  },
+  {
+    title: 'Schedulling Algorithm with Visualizing Gantt Chart for Operating Systems',
+    description: 'A C program built during college that visualizes CPU scheduling algorithms — FCFS, SJF, SRTN, Priority (preemptive & non-preemptive), and Round Robin — using the graphics.h library. Enter your processes and instantly see a Gantt chart along with turnaround and waiting time stats. Note: Round Robin was implemented based on college-level understanding and may not cover all edge cases perfectly.',
+    link2:'https://github.com/ANGELKORADIYA/scheduling_algo_with_graphics.h'
+  },
+  {
+    title: '1930 Helpline Improvement',
+    description: 'A machine learning project built at the Rajasthan Police Hackathon to detect fake complaints on the 1930 helpline. Uses scikit-learn to analyze and classify police complaint data. Not fully completed, but a great hands-on introduction to ML concepts.',
+    link2: 'https://github.com/Kathan0920/RJPOLICE_HACK_1202_CyberCrew_9',
+  },
+  {
+    title: 'Public Library Management',
+    description: 'A comprehensive management system for public libraries that streamlines book lending and user registrations. Dropped idea after hackathon.',
+    link2: 'https://github.com/ANGELKORADIYA/public-library',
   },
 ];
 
