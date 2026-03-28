@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { useTheme } from "./components/ThemeProvider";
+import { FiSun, FiMoon, FiArrowDown } from "react-icons/fi";
 
 export default function Navbar() {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -60,17 +61,13 @@ export default function Navbar() {
 
           <button
             onClick={toggleDarkMode}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all active:scale-95"
             aria-label="Toggle dark mode"
           >
             {darkMode ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591-1.591M12 18.75a6.75 6.75 0 110-13.5 6.75 6.75 0 010 13.5z" />
-              </svg>
+              <FiSun className="w-5 h-5" />
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-              </svg>
+              <FiMoon className="w-5 h-5" />
             )}
           </button>
 
@@ -79,23 +76,10 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open Angel Koradiya resume in a new tab"
-            className="hidden md:flex px-4 py-2 rounded-lg text-base font-medium text-white bg-sky-600 hover:bg-sky-700 transition items-center gap-1 shadow-md shadow-sky-500/20"
+            className="hidden md:flex px-5 py-2.5 rounded-xl text-base font-bold text-white bg-sky-600 hover:bg-sky-700 transition-all items-center gap-2 shadow-lg shadow-sky-500/25 active:scale-95"
           >
             Resume
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"
-              />
-            </svg>
+            <FiArrowDown className="w-5 h-5 animate-bounce-slow" />
           </a>
         </nav>
       </div>

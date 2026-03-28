@@ -14,7 +14,7 @@ const projects = [
     title: 'Black Water - Stock Analysis and Prediction Model',
     description: 'Inspired by the 1930 helpline project, I developed an automated stock analysis and prediction model. Uses historical data to provide insights and forecast market trends, helping to automate investment decisions.',
     link: 'https://black-waters.vercel.app/',
-    link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
+    // link2: 'https://github.com/ANGELKORADIYA/black-water-analysis',
     logo: 'https://black-waters.vercel.app/assets/logo-Cc8KG4OS.png',
   },
   {
