@@ -106,21 +106,21 @@ const projects = [
   },
   {
     title: 'VeriScan',
-    description: 'Face recognition system for secure authentication and monitoring. Built during hackathons for real-world security use cases.',
+    description: 'Face recognition system from fetching facebook prefetched profile photo from facebook id.',
     link2: 'https://github.com/ANGELKORADIYA/VeriScan',
     category: 'AI & ML',
     tags: ['OpenCV', 'Face Recognition', 'Python']
   },
   {
     title: 'Guess the Number',
-    description: 'An interactive game where players guess a randomly generated number with helpful hints and scoring.',
+    description: 'An interactive game where players guess a randomly generated number with helpful hints and scoring. Build when learning JavaScript basics.',
     link2: 'https://github.com/ANGELKORADIYA/Guess-the-Number',
     category: 'Games',
     tags: ['JavaScript', 'Game', 'Logic']
   },
   {
     title: 'TO-DO LIST',
-    description: 'Efficient task management application with persistent storage, categories, and priority levels.',
+    description: 'Efficient task management application with persistent storage, categories, and priority levels. Build when learning Web Development basics.',
     link2: 'https://github.com/ANGELKORADIYA/TO-DO-LIST',
     category: 'Games',
     tags: ['Productivity', 'Frontend', 'React']

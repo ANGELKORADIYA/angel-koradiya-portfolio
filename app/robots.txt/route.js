@@ -1,13 +1,15 @@
+import { siteConfig } from "../../lib/siteConfig";
+
 export async function GET() {
   const robotsTxt = `# *
 User-agent: *
 Allow: /
 
 # Host
-Host: https://angelkoradiya.vercel.app
+Host: ${siteConfig.siteUrl}
 
 # Sitemaps
-Sitemap: https://angelkoradiya.vercel.app/sitemap.xml`;
+Sitemap: ${siteConfig.siteUrl}/sitemap.xml`;
 
   return new Response(robotsTxt, {
     headers: {
