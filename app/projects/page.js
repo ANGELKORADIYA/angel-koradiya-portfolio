@@ -1,11 +1,13 @@
 // pages/projects.js
 "use client";
 import { useState, useMemo } from "react";
+import Image from "next/image";
 
 const projects = [
+// ... (projects data remains the same)
   {
     title: 'Wanderlogue',
-    description: 'A full-stack travel logging application built with the MERN stack. Features include infinite scrolling, post uploads, and a seamless user experience for documenting and sharing travel adventures.',
+    description: 'A full-stack travel logging application built with the MERN stack. Features include infinite scrolling, and a seamless user experience for documenting and sharing travel adventures.',
     link: 'https://wanderlogues.vercel.app/',
     link2: 'https://github.com/ANGELKORADIYA/Wanderlogue',
     logo: 'https://wanderlogues.vercel.app/assets/favicon-CIIPRWpr.ico',
@@ -13,8 +15,8 @@ const projects = [
     tags: ['MERN', 'Full Stack', 'Cloudinary']
   },
   {
-    title: 'Black Water - Stock Analysis and Prediction Model',
-    description: 'Inspired by the 1930 helpline project, I developed an automated stock analysis and prediction model. Uses historical data to provide insights and forecast market trends, helping to automate investment decisions.',
+    title: 'Black Water - Stock Analysis and Paper Trading',
+    description: 'Inspired by the 1930 helpline project, I developed an automated stock analysis and prediction model and paper trading platform. Uses historical data to provide insights and forecast market trends, helping to automate investment decisions.',
     link: 'https://black-waters.vercel.app/',
     link2: 'https://github.com/ANGELKORADIYA/black-water',
     logo: 'https://black-waters.vercel.app/assets/logo-Cc8KG4OS.png',
@@ -23,7 +25,7 @@ const projects = [
   },
   {
     title: 'QuizMaster',
-    description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.',
+    description: 'My first web project where I learned Express.js, Node.js, and MongoDB. A simple yet functional quiz application.Basically faculty student quiz app.',
     link: 'https://quiz-minimal.vercel.app/',
     link2: 'https://github.com/AngelKoradiya/Quiz',
     logo: 'https://quiz-minimal.vercel.app/favicon.ico',
@@ -137,6 +139,36 @@ const projects = [
 
 const categories = ['All', 'Web Apps', 'Gen AI' ,'AI & ML', 'Games', 'Finance', 'Systems & Tools'];
 
+function ProjectIcon({ project, index }) {
+  const [error, setError] = useState(false);
+  const initials = project.title ? project.title.charAt(0) : "-";
+  const gradient = `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`;
+
+  if (!project.logo || error) {
+    return (
+      <div 
+        className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all duration-300 bg-gray-50 dark:bg-gray-800/50"
+        style={{ background: gradient }}
+      >
+        {initials}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-sm overflow-hidden bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 transition-all duration-300 relative group-hover:bg-sky-100 dark:group-hover:bg-sky-900/30">
+      <Image
+        src={project.logo}
+        alt={`${project.title} logo`}
+        fill
+        className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
+        onError={() => setError(true)}
+        unoptimized={project.logo.endsWith('.svg') || project.logo.endsWith('.ico')}
+      />
+    </div>
+  );
+}
+
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -146,33 +178,34 @@ export default function Projects() {
   }, [selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pt-24 pb-12 p-6 flex flex-col items-center transition-colors duration-300">
-      {/* Decorative background elements */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-sky-200 dark:bg-sky-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob pointer-events-none"></div>
-        <div className="absolute bottom-[10%] right-[5%] w-72 h-72 bg-indigo-200 dark:bg-indigo-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 pointer-events-none"></div>
-      </div>
+    <div className="min-h-screen bg-white dark:bg-gray-950 pt-24 pb-12 p-6 flex flex-col items-center transition-colors duration-300 relative overflow-hidden">
+      {/* Background Dot Grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
-      <div className="max-w-6xl w-full p-2 md:p-6">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight">
-            My <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400">Projects</span>
+      {/* Decorative floating elements */}
+      <div className="fixed top-1/4 -right-20 w-96 h-96 bg-sky-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="fixed bottom-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <header className="mb-12 text-left">
+          <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter bg-gradient-to-r from-gray-900 via-sky-600 to-gray-900 dark:from-white dark:via-sky-400 dark:to-white bg-clip-text text-transparent">
+            Featured <span className="text-sky-500">Projects</span>
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
             A curated collection of my work spanning full-stack development, artificial intelligence, and specialized engineering tools.
           </p>
-        </div>
+        </header>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-start gap-3 mb-12">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border ${
                 selectedCategory === category
-                  ? 'bg-sky-600 border-sky-600 text-white shadow-lg shadow-sky-600/30 scale-105'
-                  : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:border-sky-400 dark:hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400'
+                  ? 'bg-sky-500 border-sky-500 text-white shadow-lg shadow-sky-500/20 scale-105'
+                  : 'bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:border-sky-400 dark:hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400'
               }`}
             >
               {category}
@@ -180,49 +213,33 @@ export default function Projects() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4"> 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"> 
           {filteredProjects.map((project, index) => (
             <article 
               key={project.title} 
-              className="group relative bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-2xl hover:shadow-sky-500/10 transform transition-all duration-500 hover:scale-[1.02] overflow-hidden flex flex-col h-full"
+              className="group relative p-6 bg-white/40 dark:bg-gray-900/20 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-800/50 hover:border-sky-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/5 overflow-hidden flex flex-col h-full"
             >
-              <div className="absolute top-0 right-0 p-4 z-10">
-                 <span className="px-3 py-1 bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 rounded-full text-[10px] font-black uppercase tracking-wider border border-sky-200 dark:border-sky-800/50">
-                    {project.category}
-                 </span>
-              </div>
-
-              <div className="relative p-6 flex flex-col flex-grow pt-10">
+              <div className="relative flex flex-col flex-grow">
                 {/* Header with icon and title */}
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-md overflow-hidden bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700" style={{background: project.logo ? undefined : `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`}}>
-                    {project.logo ? (
-                      <img 
-                        src={project.logo} 
-                        alt={`${project.title} logo`} 
-                        className="w-full h-full object-contain p-2"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.parentElement.style.background = `linear-gradient(135deg, ${index % 2 === 0 ? '#6366f1' : '#ec4899'}, ${index % 3 === 0 ? '#06b6d4' : '#f97316'})`;
-                          e.target.parentElement.innerText = project.title ? project.title.charAt(0) : "-";
-                        }}
-                      />
-                    ) : (
-                      project.title ? project.title.charAt(0) : "-"
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{project.title}</h2>
+                  <ProjectIcon project={project} index={index} />
+                  <div className="flex-1 min-w-0 pt-1">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white leading-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                      {project.title}
+                    </h2>
                   </div>
                 </div>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                {/* Tags & Category */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tags?.map(tag => (
-                    <span key={tag} className="text-[10px] font-bold text-gray-500 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 px-2 py-0.5 rounded-md border border-gray-100 dark:border-gray-800">
+                    <span key={tag} className="text-[9px] font-bold text-gray-500 dark:text-gray-500 bg-gray-50/50 dark:bg-gray-800/50 px-1.5 py-0.5 rounded border border-gray-100/50 dark:border-gray-800/50">
                       #{tag}
                     </span>
                   ))}
+                  <span className="px-2 py-0.5 bg-sky-100/50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 rounded-full text-[9px] font-black uppercase tracking-wider border border-sky-200/50 dark:border-sky-800/50 ml-auto">
+                    {project.category}
+                  </span>
                 </div>
 
                 {/* Description */}
@@ -231,10 +248,10 @@ export default function Projects() {
                 </p>
 
                 {/* Buttons at bottom */}
-                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-100/50 dark:border-gray-800/50">
                   {project.link && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 bg-sky-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-sky-700 transition-all shadow-md shadow-sky-500/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 bg-sky-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-sky-700 transition-all shadow-md shadow-sky-500/20 active:scale-95">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                       Demo
@@ -242,11 +259,11 @@ export default function Projects() {
                   )}
 
                   {project.link2 && (
-                    <a href={project.link2} target="_blank" rel="noopener noreferrer" className={`${project.link ? 'w-auto' : 'flex-1'} inline-flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <a href={project.link2} target="_blank" rel="noopener noreferrer" className={`${project.link ? 'px-3' : 'flex-1'} inline-flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all active:scale-95`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                       </svg>
-                      {project.link ? '' : 'Code'}
+                      Code
                     </a>
                   )}
                 </div>
